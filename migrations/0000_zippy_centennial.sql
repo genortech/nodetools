@@ -15,6 +15,9 @@ CREATE TABLE `user_session` (
 --> statement-breakpoint
 CREATE TABLE `user` (
 	`id` text PRIMARY KEY NOT NULL,
+	`username` text NOT NULL,
 	`created_at` integer DEFAULT CURRENT_TIMESTAMP,
 	`updated_at` integer DEFAULT CURRENT_TIMESTAMP
 );
+--> statement-breakpoint
+CREATE UNIQUE INDEX `user_username_unique` ON `user` (`username`);

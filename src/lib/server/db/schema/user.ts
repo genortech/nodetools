@@ -3,7 +3,8 @@ import { blob, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 
 export const user = sqliteTable('user', {
-	id: text('id').notNull().primaryKey(),
+	id: text('id').primaryKey(),
+	username: text('username').notNull().unique(),
 	createAt: integer('created_at', { mode: 'timestamp' }).default(sql`CURRENT_TIMESTAMP`),
 	updatedAt: integer('updated_at', { mode: 'timestamp' }).default(sql`CURRENT_TIMESTAMP`)
 });
