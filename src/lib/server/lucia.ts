@@ -8,14 +8,16 @@ import { libsql } from '@lucia-auth/adapter-sqlite';
 // expect error (see next section)
 export const auth = lucia({
 	env: dev ? 'DEV' : 'PROD',
-	middleware: sveltekit(),
 	adapter: libsql(client, {
 		user: 'user',
 		key: 'user_key',
 		session: 'user_session'
 	}),
+	middleware: sveltekit(),
 	getUserAttributes: (data) => {
-		return {};
+		return {
+			username: data.username
+		};
 	}
 });
 

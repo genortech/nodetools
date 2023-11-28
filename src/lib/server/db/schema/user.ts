@@ -1,11 +1,15 @@
 import { sql } from 'drizzle-orm';
-import { blob, integer, sqliteTable, sqliteTableCreator, text } from 'drizzle-orm/sqlite-core';
+import { blob, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 
 export const user = sqliteTable('user', {
 	id: text('id').notNull().primaryKey(),
 	createAt: integer('created_at', { mode: 'timestamp' }).default(sql`CURRENT_TIMESTAMP`),
 	updatedAt: integer('updated_at', { mode: 'timestamp' }).default(sql`CURRENT_TIMESTAMP`)
 });
+
+export const insertUserSchema = createInsertSchema(user);
+export const selectUserSchema = createSelectSchema(user);
 
 export const key = sqliteTable('user_key', {
 	id: text('id').primaryKey(),
@@ -15,6 +19,9 @@ export const key = sqliteTable('user_key', {
 	hashPassword: text('hashed_password')
 });
 
+export const insertUserKeySchema = createInsertSchema(key);
+export const selectUserKeySchema = createSelectSchema(key);
+
 export const session = sqliteTable('user_session', {
 	id: text('id').primaryKey(),
 	userId: text('user_id')
@@ -23,3 +30,6 @@ export const session = sqliteTable('user_session', {
 	activeExpires: blob('active_expires', { mode: 'bigint' }).notNull(),
 	idleExpires: blob('idle_expires', { mode: 'bigint' }).notNull()
 });
+
+export const insertUserSessionSchema = createInsertSchema(session);
+export const selectUserSessionSchema = createSelectSchema(session);

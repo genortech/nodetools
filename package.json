@@ -38,10 +38,11 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@libsql/client": "0.4.0-pre.2",
+		"@libsql/client": "0.3.5",
 		"@lucia-auth/adapter-sqlite": "^2.0.1",
 		"@lucia-auth/oauth": "^3.5.0",
 		"drizzle-orm": "^0.29.0",
+		"drizzle-zod": "^0.5.1",
 		"lucia": "^2.7.4"
 	}
 }
