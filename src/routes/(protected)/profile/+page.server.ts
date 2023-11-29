@@ -5,7 +5,12 @@ import type { Actions, PageServerLoad } from './$types';
 import { auth } from '$lib/server/lucia';
 
 export const load: PageServerLoad = async ({ locals }) => {
-	return {};
+	const session = await locals.auth.validate();
+	if (!session) throw redirect(302, '/login');
+	return {
+		userId: session.user.userId,
+		username: session.user.username
+	};
 };
 
 export const actions: Actions = {

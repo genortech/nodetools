@@ -1,10 +1,14 @@
-import { sql } from 'drizzle-orm';
+import { relations, sql } from 'drizzle-orm';
 import { blob, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
+import { organisation } from './organisation';
 
 export const user = sqliteTable('user', {
 	id: text('id').primaryKey(),
+	email: text('email').notNull().unique(),
+	is_admin: integer('is_admin', { mode: 'boolean' }),
 	username: text('username').notNull().unique(),
+	organisationId: text('organisation_id').references(() => organisation.id),
 	createAt: integer('created_at', { mode: 'timestamp' }).default(sql`CURRENT_TIMESTAMP`),
 	updatedAt: integer('updated_at', { mode: 'timestamp' }).default(sql`CURRENT_TIMESTAMP`)
 });
@@ -34,3 +38,23 @@ export const session = sqliteTable('user_session', {
 
 export const insertUserSessionSchema = createInsertSchema(session);
 export const selectUserSessionSchema = createSelectSchema(session);
+
+export const userProfile = sqliteTable('user_profile', {
+	id: text('id').primaryKey(),
+	userId: text('user_id')
+		.notNull()
+		.references(() => user.id),
+	profile: blob('profile'),
+	avatarUrl: text('avatar_url')
+});
+
+export const userOneRelations = relations(user, ({ one }) => ({
+	organization: one(organisation, {
+		fields: [user.organisationId],
+		references: [organisation.id]
+	}),
+	profile: one(userProfile, {
+		fields: [user.id],
+		references: [userProfile.userId]
+	})
+}));

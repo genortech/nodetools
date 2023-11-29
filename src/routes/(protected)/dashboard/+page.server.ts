@@ -1,11 +1,20 @@
-// routes/+page.server.ts
 import { fail, redirect } from '@sveltejs/kit';
 
 import type { Actions, PageServerLoad } from './$types';
 import { auth } from '$lib/server/lucia';
+import { project } from '$lib/server/db/schema/projects';
+import { eq } from 'drizzle-orm';
+import { db } from '$lib/server/db/db';
 
 export const load: PageServerLoad = async ({ locals }) => {
-	return {};
+	const session = await locals.auth.validate();
+	if (!session) throw redirect(302, '/login');
+	const projects = await db.select().from(project).where(eq(project.userId, session.user.userId));
+	return {
+		userId: session.user.userId,
+		username: session.user.username,
+		projects
+	};
 };
 
 export const actions: Actions = {
