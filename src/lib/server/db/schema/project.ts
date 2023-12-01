@@ -6,11 +6,11 @@ import { organisation } from './organisation';
 export const project = sqliteTable(
 	'project',
 	{
-		id: text('id').primaryKey().notNull(),
+		id: integer('id').primaryKey({ autoIncrement: true }),
 		prjctRef: text('project_reference').notNull(),
 		prjctClient: text('client_name'),
 		userId: text('user_id').references(() => user.id),
-		organisationId: text('company_id').references(() => organisation.id),
+		// organisationId: text('company_id').references(() => organisation.id),
 		createAt: integer('created_at', { mode: 'timestamp' }).default(sql`CURRENT_TIMESTAMP`),
 		updatedAt: integer('updated_at', { mode: 'timestamp' }).default(sql`CURRENT_TIMESTAMP`)
 	},
@@ -25,9 +25,9 @@ export const projectOneRelations = relations(project, ({ one }) => ({
 	author: one(user, {
 		fields: [project.userId],
 		references: [user.id]
-	}),
-	organization: one(organisation, {
-		fields: [project.organisationId],
-		references: [organisation.id]
 	})
+	// organization: one(organisation, {
+	// 	fields: [project.organisationId],
+	// 	references: [organisation.id]
+	// })
 }));

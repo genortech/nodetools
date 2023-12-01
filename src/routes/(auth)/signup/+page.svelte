@@ -10,6 +10,8 @@
 <form method="post" use:enhance>
 	<Label for="username">Username</Label>
 	<Input name="username" id="username" /><br />
+	<Label for="email">Email</Label>
+	<Input name="Email" id="Email" /><br />
 	<Label for="password">Password</Label>
 	<Input type="password" name="password" id="password" /><br />
 	<Button type="submit">Sign Up</Button>

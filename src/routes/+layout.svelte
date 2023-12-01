@@ -1,5 +1,6 @@
-<script>
+<script lang="ts">
 	import '../app.pcss';
+	export let data;
 </script>
 
 <head>
@@ -13,7 +14,11 @@
 		<div class="flex flex-row gap-x-4 items-center">
 			<a href="/contact" class="font-light text-slate-600 hover:underline">Contact</a>
 			<a href="/about" class="font-light text-slate-600 hover:underline">About</a>
-			<a href="/login" class="font-light text-slate-600 hover:underline">login</a>
+			{#if true == data.session}
+				<a href="/login" class="font-light text-slate-600 hover:underline">login</a>
+			{:else}
+				<a href="/logout" class="font-light text-slate-600 hover:underline">logout</a>
+			{/if}
 		</div>
 	</header>
 	<slot />

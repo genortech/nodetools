@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "a12a7a71-2a33-4b01-a5fb-3d7f7706aa0f",
+  "id": "4c10a1b5-ae76-4858-a685-912cbb354568",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "organisation": {
@@ -46,10 +46,10 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "text",
+          "type": "integer",
           "primaryKey": true,
           "notNull": true,
-          "autoincrement": false
+          "autoincrement": true
         },
         "project_reference": {
           "name": "project_reference",
@@ -67,13 +67,6 @@
         },
         "user_id": {
           "name": "user_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "company_id": {
-          "name": "company_id",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
@@ -112,19 +105,6 @@
           "tableTo": "user",
           "columnsFrom": [
             "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "project_company_id_organisation_id_fk": {
-          "name": "project_company_id_organisation_id_fk",
-          "tableFrom": "project",
-          "tableTo": "organisation",
-          "columnsFrom": [
-            "company_id"
           ],
           "columnsTo": [
             "id"
@@ -241,6 +221,20 @@
           "notNull": true,
           "autoincrement": false
         },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "is_admin": {
+          "name": "is_admin",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "username": {
           "name": "username",
           "type": "text",
@@ -273,6 +267,13 @@
         }
       },
       "indexes": {
+        "user_email_unique": {
+          "name": "user_email_unique",
+          "columns": [
+            "email"
+          ],
+          "isUnique": true
+        },
         "user_username_unique": {
           "name": "user_username_unique",
           "columns": [

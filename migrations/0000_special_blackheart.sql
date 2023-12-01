@@ -6,15 +6,13 @@ CREATE TABLE `organisation` (
 );
 --> statement-breakpoint
 CREATE TABLE `project` (
-	`id` text PRIMARY KEY NOT NULL,
+	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`project_reference` text NOT NULL,
 	`client_name` text,
 	`user_id` text,
-	`company_id` text,
 	`created_at` integer DEFAULT CURRENT_TIMESTAMP,
 	`updated_at` integer DEFAULT CURRENT_TIMESTAMP,
-	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON UPDATE no action ON DELETE no action,
-	FOREIGN KEY (`company_id`) REFERENCES `organisation`(`id`) ON UPDATE no action ON DELETE no action
+	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON UPDATE no action ON DELETE no action
 );
 --> statement-breakpoint
 CREATE TABLE `user_key` (
@@ -34,6 +32,8 @@ CREATE TABLE `user_session` (
 --> statement-breakpoint
 CREATE TABLE `user` (
 	`id` text PRIMARY KEY NOT NULL,
+	`email` text,
+	`is_admin` integer,
 	`username` text NOT NULL,
 	`organisation_id` text,
 	`created_at` integer DEFAULT CURRENT_TIMESTAMP,
@@ -50,4 +50,5 @@ CREATE TABLE `user_profile` (
 );
 --> statement-breakpoint
 CREATE INDEX `user_id_idx` ON `project` (`user_id`);--> statement-breakpoint
+CREATE UNIQUE INDEX `user_email_unique` ON `user` (`email`);--> statement-breakpoint
 CREATE UNIQUE INDEX `user_username_unique` ON `user` (`username`);
