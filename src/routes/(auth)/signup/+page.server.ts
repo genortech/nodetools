@@ -16,7 +16,6 @@ export const actions: Actions = {
 		const formData = await request.formData();
 		console.log('POST', formData);
 		const password = formData.get('password');
-		const username = formData.get('username');
 		const email = formData.get('email');
 		// basic check
 		if (typeof username !== 'string' || username.length < 4 || username.length > 31) {

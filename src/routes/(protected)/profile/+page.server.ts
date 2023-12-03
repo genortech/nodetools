@@ -1,11 +1,10 @@
 // routes/+page.server.ts
-import { fail, redirect } from '@sveltejs/kit';
-
-import type { Actions, PageServerLoad } from './$types';
-import { auth } from '$lib/server/lucia';
 import { db } from '$lib/server/db/db';
-import { userProfile } from '$lib/server/db/schema/user';
+import { userProfile } from '$lib/server/db/schema/users';
+import { auth } from '$lib/server/lucia';
+import { fail, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
+import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	const session = await locals.auth.validate();
@@ -17,7 +16,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 
 	return {
 		userId: session.user.userId,
-		username: session.user.username,
+		email: session.user.email,
 		profile
 	};
 };

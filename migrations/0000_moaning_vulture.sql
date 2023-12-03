@@ -32,9 +32,8 @@ CREATE TABLE `user_session` (
 --> statement-breakpoint
 CREATE TABLE `user` (
 	`id` text PRIMARY KEY NOT NULL,
-	`email` text,
+	`email` text NOT NULL,
 	`is_admin` integer,
-	`username` text NOT NULL,
 	`organisation_id` text,
 	`created_at` integer DEFAULT CURRENT_TIMESTAMP,
 	`updated_at` integer DEFAULT CURRENT_TIMESTAMP,
@@ -43,6 +42,7 @@ CREATE TABLE `user` (
 --> statement-breakpoint
 CREATE TABLE `user_profile` (
 	`id` text PRIMARY KEY NOT NULL,
+	`username` text NOT NULL,
 	`user_id` text NOT NULL,
 	`profile` blob,
 	`avatar_url` text,
@@ -51,4 +51,4 @@ CREATE TABLE `user_profile` (
 --> statement-breakpoint
 CREATE INDEX `user_id_idx` ON `project` (`user_id`);--> statement-breakpoint
 CREATE UNIQUE INDEX `user_email_unique` ON `user` (`email`);--> statement-breakpoint
-CREATE UNIQUE INDEX `user_username_unique` ON `user` (`username`);
+CREATE UNIQUE INDEX `user_profile_username_unique` ON `user_profile` (`username`);

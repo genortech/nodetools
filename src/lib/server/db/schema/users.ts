@@ -1,13 +1,12 @@
 import { relations, sql } from 'drizzle-orm';
 import { blob, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
-import { organisation } from './organisation';
+import { organisation } from './organisations';
 
 export const user = sqliteTable('user', {
 	id: text('id').primaryKey(),
-	email: text('email').unique(),
+	email: text('email').unique().notNull(),
 	is_admin: integer('is_admin', { mode: 'boolean' }),
-	username: text('username').notNull().unique(),
 	organisationId: text('organisation_id').references(() => organisation.id),
 	createAt: integer('created_at', { mode: 'timestamp' }).default(sql`CURRENT_TIMESTAMP`),
 	updatedAt: integer('updated_at', { mode: 'timestamp' }).default(sql`CURRENT_TIMESTAMP`)
@@ -41,6 +40,7 @@ export const selectUserSessionSchema = createSelectSchema(session);
 
 export const userProfile = sqliteTable('user_profile', {
 	id: text('id').primaryKey(),
+	username: text('username').notNull().unique(),
 	userId: text('user_id')
 		.notNull()
 		.references(() => user.id),

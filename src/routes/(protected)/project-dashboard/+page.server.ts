@@ -1,7 +1,7 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { auth } from '$lib/server/lucia';
-import { project } from '$lib/server/db/schema/project';
+import { project } from '$lib/server/db/schema/projects';
 import { eq } from 'drizzle-orm';
 import { db } from '$lib/server/db/db';
 

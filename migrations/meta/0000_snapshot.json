@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "4c10a1b5-ae76-4858-a685-912cbb354568",
+  "id": "1cecc760-573d-487c-8756-702d042c98f7",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "organisation": {
@@ -225,7 +225,7 @@
           "name": "email",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "is_admin": {
@@ -233,13 +233,6 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false
-        },
-        "username": {
-          "name": "username",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
           "autoincrement": false
         },
         "organisation_id": {
@@ -273,13 +266,6 @@
             "email"
           ],
           "isUnique": true
-        },
-        "user_username_unique": {
-          "name": "user_username_unique",
-          "columns": [
-            "username"
-          ],
-          "isUnique": true
         }
       },
       "foreignKeys": {
@@ -310,6 +296,13 @@
           "notNull": true,
           "autoincrement": false
         },
+        "username": {
+          "name": "username",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
         "user_id": {
           "name": "user_id",
           "type": "text",
@@ -332,7 +325,15 @@
           "autoincrement": false
         }
       },
-      "indexes": {},
+      "indexes": {
+        "user_profile_username_unique": {
+          "name": "user_profile_username_unique",
+          "columns": [
+            "username"
+          ],
+          "isUnique": true
+        }
+      },
       "foreignKeys": {
         "user_profile_user_id_user_id_fk": {
           "name": "user_profile_user_id_user_id_fk",

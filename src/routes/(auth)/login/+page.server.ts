@@ -1,36 +1,35 @@
 // routes/login/+page.server.ts
 import { auth } from '$lib/server/lucia';
-import { LuciaError } from 'lucia';
 import { fail, redirect } from '@sveltejs/kit';
-
-import type { PageServerLoad, Actions } from './$types';
+import { LuciaError } from 'lucia';
+import type { Actions, PageServerLoad } from './$types';
+import { userSchema } from '$lib/config/zod-schema';
+import { setError, superValidate } from 'sveltekit-superforms/server';
+const signinSchema = userSchema.pick({
+	email: true,
+	password: true
+});
 
 export const load: PageServerLoad = async ({ locals }) => {
 	const session = await locals.auth.validate();
+
 	if (session) throw redirect(302, '/dashboard');
-	return {};
+	const signinForm = await superValidate(signinSchema);
+	return { signinForm };
 };
 
 export const actions: Actions = {
 	default: async ({ request, locals }) => {
-		const formData = await request.formData();
-		const username = formData.get('username');
-		const password = formData.get('password');
-		// basic check
-		if (typeof username !== 'string' || username.length < 1 || username.length > 31) {
-			return fail(400, {
-				message: 'Invalid username'
-			});
-		}
-		if (typeof password !== 'string' || password.length < 1 || password.length > 255) {
-			return fail(400, {
-				message: 'Invalid password'
-			});
+		const signinForm = await superValidate(request, signinSchema);
+		console.log('POST', signinForm);
+
+		if (!signinForm.valid) {
+			return fail(400, { signinForm });
 		}
 		try {
 			// find user by key
 			// and validate password
-			const key = await auth.useKey('username', username.toLowerCase(), password);
+			const key = await auth.useKey('emailpass', signinForm.data.email, signinForm.data.password);
 			const session = await auth.createSession({
 				userId: key.userId,
 				attributes: {}
@@ -47,12 +46,14 @@ export const actions: Actions = {
 					message: 'Incorrect username or password'
 				});
 			}
+
 			return fail(500, {
 				message: 'An unknown error occurred'
 			});
 		}
 		// redirect to
 		// make sure you don't throw inside a try/catch block!
-		throw redirect(302, '/dashboard');
+
+		return { signinForm };
 	}
 };

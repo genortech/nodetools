@@ -3,9 +3,9 @@ import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { auth } from '$lib/server/lucia';
 import { db } from '$lib/server/db/db';
-import { userProfile } from '$lib/server/db/schema/user';
+import { userProfile } from '$lib/server/db/schema/users';
 import { eq } from 'drizzle-orm';
-import { project } from '$lib/server/db/schema/project';
+import { project } from '$lib/server/db/schema/projects';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	const session = await locals.auth.validate();

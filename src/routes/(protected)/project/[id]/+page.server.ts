@@ -1,4 +1,4 @@
-import { project } from '$lib/server/db/schema/project';
+import { project } from '$lib/server/db/schema/projects';
 import { eq } from 'drizzle-orm';
 import type { PageServerLoad } from '../$types';
 import { db } from '$lib/server/db/db';
