@@ -24,7 +24,6 @@
 	let grandTotal = 0;
 
 	export let data;
-
 	const { form, enhance, formId } = superForm(data.comMaxDemandT3Form, {
 		resetForm: false,
 		id: 't3form',
@@ -35,9 +34,13 @@
 			return (theatresTotal = thVA * thArea);
 		}
 	});
+	function calcTotal() {
+		let grandTotal = theatresTotal + tavernsTotal + lightIndTotal;
+		return grandTotal;
+	}
 </script>
 
-<!-- <SuperDebug data={{ $formId, $form }} /> -->
+<SuperDebug data={{ $formId, $form }} />
 <br />
 <div class="flex flex-col items-center justify-center">
 	<div class="flex flex-row items-center justify-center gap-3">
@@ -258,7 +261,7 @@
 			<!-- {#if data.session.isLoggedIn === true} -->
 			<!-- 	<Button>Save Calculation</Button> -->
 			<!-- {/if} -->
-			<Button>Calculate Max Demand</Button>
+			<Button type="submit" on:submit={calcTotal}>Calculate Max Demand</Button>
 			<p>Grand Total : VA</p>
 			<!-- <Button>Print out Calculation</Button> -->
 		</form>
