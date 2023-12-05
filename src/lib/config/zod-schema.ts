@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 export const userSchema = z.object({
+	id: z.string().regex(/^|d+$/),
 	email: z
 		.string({ required_error: 'Email is required' })
 		.email({ message: 'Please enter a valid email address' }),

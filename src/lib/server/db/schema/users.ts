@@ -1,60 +1,60 @@
 import { relations, sql } from 'drizzle-orm';
 import { blob, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
-import { organisation } from './organisations';
+import { organisation_table } from './organisations';
 
-export const user = sqliteTable('user', {
+export const user_table = sqliteTable('user', {
 	id: text('id').primaryKey(),
 	email: text('email').unique().notNull(),
 	is_admin: integer('is_admin', { mode: 'boolean' }),
-	organisationId: text('organisation_id').references(() => organisation.id),
+	organisationId: text('organisation_id').references(() => organisation_table.id),
 	createAt: integer('created_at', { mode: 'timestamp' }).default(sql`CURRENT_TIMESTAMP`),
 	updatedAt: integer('updated_at', { mode: 'timestamp' }).default(sql`CURRENT_TIMESTAMP`)
 });
 
-export const insertUserSchema = createInsertSchema(user);
-export const selectUserSchema = createSelectSchema(user);
+export const insertUserSchema = createInsertSchema(user_table);
+export const selectUserSchema = createSelectSchema(user_table);
 
-export const key = sqliteTable('user_key', {
+export const key_table = sqliteTable('user_key', {
 	id: text('id').primaryKey(),
 	userId: text('user_id')
 		.notNull()
-		.references(() => user.id),
+		.references(() => user_table.id),
 	hashPassword: text('hashed_password')
 });
 
-export const insertUserKeySchema = createInsertSchema(key);
-export const selectUserKeySchema = createSelectSchema(key);
+export const insertUserKeySchema = createInsertSchema(key_table);
+export const selectUserKeySchema = createSelectSchema(key_table);
 
-export const session = sqliteTable('user_session', {
+export const session_table = sqliteTable('user_session', {
 	id: text('id').primaryKey(),
 	userId: text('user_id')
 		.notNull()
-		.references(() => user.id),
+		.references(() => user_table.id),
 	activeExpires: blob('active_expires', { mode: 'bigint' }).notNull(),
 	idleExpires: blob('idle_expires', { mode: 'bigint' }).notNull()
 });
 
-export const insertUserSessionSchema = createInsertSchema(session);
-export const selectUserSessionSchema = createSelectSchema(session);
+export const insertUserSessionSchema = createInsertSchema(session_table);
+export const selectUserSessionSchema = createSelectSchema(session_table);
 
-export const userProfile = sqliteTable('user_profile', {
+export const userProfile_table = sqliteTable('user_profile', {
 	id: text('id').primaryKey(),
 	username: text('username').notNull().unique(),
 	userId: text('user_id')
 		.notNull()
-		.references(() => user.id),
+		.references(() => user_table.id),
 	profile: blob('profile'),
 	avatarUrl: text('avatar_url')
 });
 
-export const userOneRelations = relations(user, ({ one }) => ({
-	organization: one(organisation, {
-		fields: [user.organisationId],
-		references: [organisation.id]
+export const userOneRelations = relations(user_table, ({ one }) => ({
+	organization: one(organisation_table, {
+		fields: [user_table.organisationId],
+		references: [organisation_table.id]
 	}),
-	profile: one(userProfile, {
-		fields: [user.id],
-		references: [userProfile.userId]
+	profile: one(userProfile_table, {
+		fields: [user_table.id],
+		references: [userProfile_table.userId]
 	})
 }));
