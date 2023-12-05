@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { PlusCircled, Check } from 'radix-icons-svelte';
-	import * as Command from '@/registry/new-york/ui/command';
-	import * as Popover from '@/registry/new-york/ui/popover';
+	import * as Command from '$lib/components/ui/command';
+	import * as Popover from '$lib/components/ui/popover';
 	import { cn } from '$lib/utils';
 
 	export let filterValues: string[] = [];

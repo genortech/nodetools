@@ -14,3 +14,11 @@ export const userSchema = z.object({
 		.min(6, { message: 'Password must be at least 6 characters' })
 		.trim()
 });
+
+export const projectSchema = z.object({
+	id: z.string(),
+	prjctRef: z.string(),
+	prjctClient: z.string()
+});
+
+export type Project = z.infer<typeof projectSchema>;
