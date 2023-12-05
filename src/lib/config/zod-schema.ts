@@ -65,7 +65,8 @@ export const comMaxDemandT3Schema = z.object({
 	tVA: z.number().positive().default(80).nullable(),
 	tArea: z.number().positive().nullable(),
 	thVA: z.number().positive().default(100).nullable(),
-	thArea: z.number().positive().nullable()
+	thArea: z.number().positive().nullable(),
+	options: z.string().array().min(1, 'Please pick one option').default(['Office'])
 });
 
 export type ComMaxDemandT3Schema = z.infer<typeof comMaxDemandT3Schema>;

@@ -40,7 +40,8 @@ const comMaxDemandT3FormSchema = comMaxDemandT3Schema.pick({
 	tVA: true,
 	tArea: true,
 	thVA: true,
-	thArea: true
+	thArea: true,
+	options: true
 });
 
 export const load: PageServerLoad = async ({ locals }) => {

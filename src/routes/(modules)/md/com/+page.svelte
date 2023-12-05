@@ -6,6 +6,7 @@
 	import { Switch } from '$lib/components/ui/switch';
 	import { superForm } from 'sveltekit-superforms/client';
 	import SuperDebug from 'sveltekit-superforms/client/SuperDebug.svelte';
+	import { get } from 'svelte/store';
 	let tableMode = false;
 	let officeMode = false;
 	let carparksMode = false;
@@ -22,17 +23,26 @@
 	let tavernsTotal = 0;
 	let theatresTotal = 0;
 	let grandTotal = 0;
+	let t3_menu = [
+		'Office',
+		'Carpark',
+		'Retail Shops',
+		'Warehouse',
+		'Theater',
+		'Taverns and Clubs',
+		'Light Industrial'
+	];
 
 	export let data;
-	const { form, enhance, formId } = superForm(data.comMaxDemandT3Form, {
-		resetForm: false,
-		id: 't3form',
-		onUpdate: (form) => {
-			let thVA: number | null = form.form.data.thVA;
-			let thArea: number | null = form.form.data.thArea;
-			console.log('VA and Area', thVA, thArea);
-			return (theatresTotal = thVA * thArea);
-		}
+	const { form, enhance, formId, errors, message } = superForm(data.comMaxDemandT3Form, {
+		clearOnSubmit: 'none',
+		id: 't3form'
+		// onUpdate: (form) => {
+		// 	let thVA: number | null = form.form.data.thVA;
+		// 	let thArea: number | null = form.form.data.thArea;
+		// 	console.log('VA and Area', thVA, thArea);
+		// 	return (theatresTotal = thVA * thArea);
+		// }
 	});
 	function calcTotal() {
 		let grandTotal = theatresTotal + tavernsTotal + lightIndTotal;
@@ -53,32 +63,38 @@
 		<h1 class="text-2xl">Table C3</h1>
 		<hr />
 
+		<div class="flex flex-row items-center justify-center gap-4">
+			<input type="hidden" name="__superform_id" value={$formId} />
+			<Label id="office-label" for="office-mode">Office:</Label>
+			<Checkbox id="office-mode" bind:checked={officeMode} aria-labelledby="office-label" />
+			<Label id="carpark-label" for="carpark-mode">Carparks:</Label>
+			<Checkbox id="carpark-mode" bind:checked={carparksMode} aria-labelledby="carpark-label" />
+			<Label id="retail-label" for="retail-mode">Retail Shops:</Label>
+			<Checkbox id="retail-mode" bind:checked={retailMode} aria-labelledby="retail-label" />
+			<Label id="warehouse-label" for="warehouse-mode">Warehouses:</Label>
+			<Checkbox
+				id="warehouse-mode"
+				bind:checked={warehouseMode}
+				aria-labelledby="warehouse-label"
+			/>
+			<Label id="light-ind-label" for="lightInd-mode">Light Industrial:</Label>
+			<Checkbox id="light-ind-mode" bind:checked={lightIndMode} aria-labelledby="light-ind-label" />
+			<Label id="taverns-label" for="taverns-mode">Taverns and Clubs:</Label>
+			<Checkbox id="taverns-mode" bind:checked={tavernsMode} aria-labelledby="taverns-label" />
+			<Label id="theatres-label" for="theatres-mode">Theatres:</Label>
+			<Checkbox id="theatres-mode" bind:checked={theatresMode} aria-labelledby="theatres-label" />
+			<br />
+		</div>
+
 		<form method="POST" action="?/t3Form" class="w-full max-w-lg" use:enhance>
 			<div class="flex flex-row items-center justify-center gap-4">
-				<input type="hidden" name="__superform_id" value={$formId} />
-				<Label id="office-label" for="office-mode">Office:</Label>
-				<Checkbox id="office-mode" bind:checked={officeMode} aria-labelledby="office-label" />
-				<Label id="carpark-label" for="carpark-mode">Carparks:</Label>
-				<Checkbox id="carpark-mode" bind:checked={carparksMode} aria-labelledby="carpark-label" />
-				<Label id="retail-label" for="retail-mode">Retail Shops:</Label>
-				<Checkbox id="retail-mode" bind:checked={retailMode} aria-labelledby="retail-label" />
-				<Label id="warehouse-label" for="warehouse-mode">Warehouses:</Label>
-				<Checkbox
-					id="warehouse-mode"
-					bind:checked={warehouseMode}
-					aria-labelledby="warehouse-label"
-				/>
-				<Label id="light-ind-label" for="lightInd-mode">Light Industrial:</Label>
-				<Checkbox
-					id="light-ind-mode"
-					bind:checked={lightIndMode}
-					aria-labelledby="light-ind-label"
-				/>
-				<Label id="taverns-label" for="taverns-mode">Taverns and Clubs:</Label>
-				<Checkbox id="taverns-mode" bind:checked={tavernsMode} aria-labelledby="taverns-label" />
-				<Label id="theatres-label" for="theatres-mode">Theatres:</Label>
-				<Checkbox id="theatres-mode" bind:checked={theatresMode} aria-labelledby="theatres-label" />
-				<br />
+				{#each t3_menu as option}
+					<Label>
+						<input type="checkbox" bind:group={$form.options} name="options" value={option} />
+						{option}
+					</Label>
+				{/each}
+				{#if $errors.options?._errors}<p>{$errors.options._errors}</p>{/if}
 			</div>
 			{#if officeMode === true}
 				<div class="flex flex-wrap -mx-3 mb-6">
@@ -254,14 +270,14 @@
 							<Input type="number" id="thArea" name="thArea" bind:value={$form.thArea} />
 						</Label>
 					</div>
-					<p>Total Theatres Load: {theatresTotal} VA</p>
+					<p>Total Theatre Load: {theatresTotal} VA</p>
 				</div>
 			{/if}
 
 			<!-- {#if data.session.isLoggedIn === true} -->
 			<!-- 	<Button>Save Calculation</Button> -->
 			<!-- {/if} -->
-			<Button type="submit" on:submit={calcTotal}>Calculate Max Demand</Button>
+			<Button>Calculate Max Demand</Button>
 			<p>Grand Total : VA</p>
 			<!-- <Button>Print out Calculation</Button> -->
 		</form>
