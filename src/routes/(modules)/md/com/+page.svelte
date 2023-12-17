@@ -50,7 +50,7 @@
 	}
 </script>
 
-<SuperDebug data={{ $formId, $form }} />
+<!-- <SuperDebug data={{ $formId, $form }} /> -->
 <br />
 <div class="flex flex-col items-center justify-center">
 	<div class="flex flex-row items-center justify-center gap-3">
