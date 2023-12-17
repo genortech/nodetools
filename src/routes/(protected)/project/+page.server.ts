@@ -9,7 +9,7 @@ import { project } from '$lib/server/db/schema/projects';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	const session = await locals.auth.validate();
-	if (!session) throw redirect(302, '/login');
+	if (!session) redirect(302, '/login');
 
 	return {
 		userId: session.user.userId,
@@ -23,7 +23,7 @@ export const actions: Actions = {
 		const formData = await request.formData();
 
 		console.log('POST', formData);
-		if (!session) throw redirect(302, '/login');
+		if (!session) redirect(302, '/login');
 
 		type NewProject = typeof project.$inferInsert;
 

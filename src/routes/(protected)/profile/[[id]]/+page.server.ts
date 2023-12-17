@@ -13,7 +13,7 @@ export const load = async ({ urls, params }) => {
 	const currentUser = await db.select().from(user).where(eq(user.id, params.id));
 
 	if (currentUser[0].id && params.id) {
-		throw error(404, 'User not found!!');
+		error(404, 'User not found!!');
 	}
 
 	const form = await superValidate(currentUser, crudSchema);
@@ -33,14 +33,14 @@ export const actions = {
 
 
       // UPDATE user
-			if (index == -1) throw error(404, 'User not found.');
+			if (index == -1) error(404, 'User not found.');
 
 
 
 		 if (formData.has('delete')) {
         // DELETE user
         users.splice(index, 1);
-        throw redirect(303, '/users');
+        redirect(303, '/users');
       } else {
         // UPDATE user
         user[index] = { ...form.data, id: form.data.id };

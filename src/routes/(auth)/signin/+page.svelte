@@ -6,6 +6,7 @@
 	import { Label } from '$lib/components/ui/label';
 	import { superForm } from 'sveltekit-superforms/client';
 	import type { PageData } from './$types';
+	import { Mail } from 'lucide-svelte';
 	export let data: PageData;
 	const { form, enhance, errors, constraints } = superForm(data.signinForm, { resetForm: false });
 </script>
@@ -27,9 +28,9 @@
 				<Input type="password" id="password" placeholder="password" name="password" required />
 			</div>
 
-			{#if form?.message}
-				<span class="text-sm font-light text-red-600">{form?.message}</span>
-			{/if}
+			<!-- {#if form?.message} -->
+			<!-- 	<span class="text-sm font-light text-red-600">{form?.message}</span> -->
+			<!-- {/if} -->
 
 			<div class="flex flex-row justify-center items-center w-full gap-1.5">
 				<Button type="submit" class="bg-blue-800 dark:text-white hover:text-black">
@@ -40,7 +41,7 @@
 		</form>
 	</Card.Content>
 	<Card.Footer class="w-full flex items-center justify-center">
-		<Button variant="link" href="/auth/signup">sign up</Button>
+		<Button variant="link" href="/signup">sign up</Button>
 	</Card.Footer>
 </Card.Root>
 

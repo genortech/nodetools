@@ -4,29 +4,38 @@ import { fail, redirect } from '@sveltejs/kit';
 
 import type { PageServerLoad, Actions } from './$types';
 import { LibsqlError } from '@libsql/client';
+import { userSchema } from '$lib/config/zod-schema';
+import { superValidate } from 'sveltekit-superforms/server';
+
+const signupSchema = userSchema.pick({
+	email: true,
+	password: true
+});
 
 export const load: PageServerLoad = async ({ locals }) => {
 	const session = await locals.auth.validate();
-	if (session) throw redirect(302, '/dashboard');
-	return {};
+
+	if (session) {
+		if (!session.user) {
+			redirect(302, '/login');
+		}
+		redirect(302, '/dashboard');
+	}
+	const signupForm = await superValidate(signupSchema);
+	return { signupForm };
 };
 
 export const actions: Actions = {
 	default: async ({ request, locals }) => {
-		const formData = await request.formData();
-		console.log('POST', formData);
-		const password = formData.get('password');
-		const email = formData.get('email');
+		const signupForm = await superValidate(request, signupSchema);
+
+		console.log('POST', signupForm);
+		const password = signupForm.data.password;
+		const email = signupForm.data.email;
 		// basic check
-		if (typeof username !== 'string' || username.length < 4 || username.length > 31) {
-			return fail(400, {
-				message: 'Invalid username'
-			});
-		}
-		if (typeof password !== 'string' || password.length < 6 || password.length > 255) {
-			return fail(400, {
-				message: 'Invalid password'
-			});
+
+		if (!signupForm.valid) {
+			return fail(400, { signupForm, message: 'Invalid username' });
 		}
 		console.log('Create User');
 		try {
@@ -61,6 +70,6 @@ export const actions: Actions = {
 		}
 		// redirect to
 		// make sure you don't throw inside a try/catch block!
-		throw redirect(302, '/dashboard');
+		redirect(302, '/dashboard');
 	}
 };

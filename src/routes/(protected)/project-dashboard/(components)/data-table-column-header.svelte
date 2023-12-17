@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { ArrowDown, ArrowUp, CaretSort } from 'radix-icons-svelte';
-	import { cn } from '@/utils';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { Button } from '$lib/components/ui/button';
+	import { cn } from '$lib/utils';
 
 	let className: string | undefined | null = undefined;
 	export { className as class };

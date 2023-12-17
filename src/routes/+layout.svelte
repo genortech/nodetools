@@ -1,11 +1,18 @@
 <script lang="ts">
 	import '../app.pcss';
+	import { ModeWatcher } from 'mode-watcher';
 	export let data;
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
+	import { Sun, Moon } from 'lucide-svelte';
+
+	import { setMode, resetMode } from 'mode-watcher';
+	import { Button } from '$lib/components/ui/button';
 </script>
 
 <head>
 	<title>NodeTools Software</title>
 </head>
+<ModeWatcher />
 <body class="flex justify-between w-full flex-col min-h-screen">
 	<header class="flex flex-row items-center justify-between px-12 py-4">
 		<a class="text-xl text-slate-800 font-extrabold" href="/"
@@ -14,11 +21,29 @@
 		<div class="flex flex-row gap-x-4 items-center">
 			<a href="/contact" class="font-light text-slate-600 hover:underline">Contact</a>
 			<a href="/about" class="font-light text-slate-600 hover:underline">About</a>
-			{#if true == data.session}
-				<a href="/login" class="font-light text-slate-600 hover:underline">login</a>
+			{#if data.session}
+				<a href="/signout" class="font-light text-slate-600 hover:underline">Sign Out</a>
 			{:else}
-				<a href="/logout" class="font-light text-slate-600 hover:underline">logout</a>
+				<a href="/signin" class="font-light text-slate-600 hover:underline">Sign In</a>
 			{/if}
+			<DropdownMenu.Root>
+				<DropdownMenu.Trigger asChild let:builder>
+					<Button builders={[builder]} variant="outline" size="icon">
+						<Sun
+							class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
+						/>
+						<Moon
+							class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
+						/>
+						<span class="sr-only">Toggle theme</span>
+					</Button>
+				</DropdownMenu.Trigger>
+				<DropdownMenu.Content align="end">
+					<DropdownMenu.Item on:click={() => setMode('light')}>Light</DropdownMenu.Item>
+					<DropdownMenu.Item on:click={() => setMode('dark')}>Dark</DropdownMenu.Item>
+					<DropdownMenu.Item on:click={() => resetMode()}>System</DropdownMenu.Item>
+				</DropdownMenu.Content>
+			</DropdownMenu.Root>
 		</div>
 	</header>
 	<slot />

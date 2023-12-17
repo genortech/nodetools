@@ -5,6 +5,7 @@ import { LuciaError } from 'lucia';
 import type { Actions, PageServerLoad } from './$types';
 import { userSchema } from '$lib/config/zod-schema';
 import { setError, superValidate } from 'sveltekit-superforms/server';
+
 const signinSchema = userSchema.pick({
 	email: true,
 	password: true
@@ -13,7 +14,7 @@ const signinSchema = userSchema.pick({
 export const load: PageServerLoad = async ({ locals }) => {
 	const session = await locals.auth.validate();
 
-	if (session) throw redirect(302, '/dashboard');
+	if (session) redirect(302, '/dashboard');
 	const signinForm = await superValidate(signinSchema);
 	return { signinForm };
 };
@@ -43,7 +44,7 @@ export const actions: Actions = {
 				// user does not exist
 				// or invalid password
 				return fail(400, {
-					message: 'Incorrect username or password'
+					message: 'Incorrect email or password'
 				});
 			}
 

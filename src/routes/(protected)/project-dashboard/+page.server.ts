@@ -7,7 +7,7 @@ import { db } from '$lib/server/db/db';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	const session = await locals.auth.validate();
-	if (!session) throw redirect(302, '/login');
+	if (!session) redirect(302, '/login');
 	console.log('Retrieve Projects');
 	const projects = await db.select().from(project).where(eq(project.userId, session.user.userId));
 	return {
@@ -23,6 +23,6 @@ export const actions: Actions = {
 		if (!session) return fail(401);
 		await auth.invalidateSession(session.sessionId); // invalidate session
 		locals.auth.setSession(null); // remove cookie
-		throw redirect(302, '/login'); // redirect to login page
+		redirect(302, '/login'); // redirect to login page
 	}
 };
