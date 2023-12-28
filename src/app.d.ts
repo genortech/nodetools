@@ -3,19 +3,33 @@
 /// <reference types="lucia" />
 declare global {
 	namespace App {
-		// interface Error {}
 		interface Locals {
 			auth: import('lucia').AuthRequest;
+			startTimer: number;
+			error: string;
+			errorId: string;
+			errorStackTrace: string;
+			message: unknown;
+			track: unknown;
 		}
-		// interface PageData {}
+		interface Error {
+			code?: string;
+			errorId?: string;
+		}
+		interface PageData {
+			flash?: { type: 'success' | 'error'; message: string };
+		}
 		// interface Platform {}
 	}
 	namespace Lucia {
 		type Auth = import('$lib/server/lucia').Auth;
 		type DatabaseUserAttributes = {
 			email: string;
+			verified: integer;
+			recieved_email: integer;
+			is_admin: integer;
 		};
-		type DatabaseSessionAttributes = {};
+		type DatabaseSessionAttributes = Record<string, never>;
 	}
 }
 

@@ -6,6 +6,8 @@ import type { PageServerLoad, Actions } from './$types';
 import { LibsqlError } from '@libsql/client';
 import { userSchema } from '$lib/config/zod-schema';
 import { superValidate } from 'sveltekit-superforms/server';
+import { generateEmailVerificationToken } from '$lib/server/tokens';
+import { sendVerificationEmail } from '$lib/config/email-message';
 
 const signupSchema = userSchema.pick({
 	email: true,
@@ -16,8 +18,8 @@ export const load: PageServerLoad = async ({ locals }) => {
 	const session = await locals.auth.validate();
 
 	if (session) {
-		if (!session.user) {
-			redirect(302, '/login');
+		if (!session.user.emailVerified) {
+			redirect(302, '/verify/email');
 		}
 		redirect(302, '/dashboard');
 	}
@@ -35,18 +37,21 @@ export const actions: Actions = {
 		// basic check
 
 		if (!signupForm.valid) {
-			return fail(400, { signupForm, message: 'Invalid username' });
+			return fail(400, { signupForm, message: 'Invalid email' });
 		}
 		console.log('Create User');
 		try {
 			const user = await auth.createUser({
 				key: {
-					providerId: 'username', // auth method
-					providerUserId: username.toLowerCase(), // unique id when using "username" auth method
+					providerId: 'email', // auth method
+					providerUserId: email.toLowerCase(), // unique id when using "username" auth method
 					password // hashed by Lucia
 				},
 				attributes: {
-					username
+					email: email.toLowerCase(),
+					verified: Number(false),
+					recieved_email: Number(true),
+					is_admin: Number(false)
 				}
 			});
 			console.log('Create Session');
@@ -54,14 +59,18 @@ export const actions: Actions = {
 				userId: user.userId,
 				attributes: {}
 			});
+
 			locals.auth.setSession(session); // set session cookie
+
+			const token = await generateEmailVerificationToken(user.userId);
+			await sendVerificationEmail(email, token);
 		} catch (err) {
 			// this part depends on the database you're using
 			// check for unique constraint error in user table
 			if (err instanceof LibsqlError && err.code === 'SQLITE_CONSTRAINT') {
 				console.log('Error', err);
 				return fail(400, {
-					message: 'Username already taken'
+					message: 'Email is already taken'
 				});
 			}
 			return fail(500, {
@@ -70,6 +79,6 @@ export const actions: Actions = {
 		}
 		// redirect to
 		// make sure you don't throw inside a try/catch block!
-		redirect(302, '/dashboard');
+		redirect(302, '/verify/email');
 	}
 };

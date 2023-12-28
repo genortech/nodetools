@@ -8,6 +8,8 @@ export const user_table = sqliteTable('user', {
 	email: text('email').unique().notNull(),
 	is_admin: integer('is_admin', { mode: 'boolean' }),
 	organisationId: text('organisation_id').references(() => organisation_table.id),
+	verified: integer('verified', { mode: 'boolean' }),
+	recieved_email: integer('recieved_email', { mode: 'boolean' }),
 	createAt: integer('created_at', { mode: 'timestamp' }).default(sql`CURRENT_TIMESTAMP`),
 	updatedAt: integer('updated_at', { mode: 'timestamp' }).default(sql`CURRENT_TIMESTAMP`)
 });
@@ -40,12 +42,30 @@ export const selectUserSessionSchema = createSelectSchema(session_table);
 
 export const userProfile_table = sqliteTable('user_profile', {
 	id: text('id').primaryKey(),
-	username: text('username').notNull().unique(),
+	firstName: text('first_name'),
+	lastName: text('first_name'),
+	userId: text('user_id')
+		.notNull()
+		.references(() => user_table.id, { onDelete: 'cascade' }),
+	profile: blob('profile'),
+	avatarUrl: text('avatar_url')
+});
+
+export const passwordVerification_table = sqliteTable('password_verification', {
+	id: text('id').primaryKey(),
 	userId: text('user_id')
 		.notNull()
 		.references(() => user_table.id),
-	profile: blob('profile'),
-	avatarUrl: text('avatar_url')
+	token: text('token'),
+	expires: blob('expires', { mode: 'bigint' }).notNull()
+});
+
+export const emailVerification_table = sqliteTable('email_verification', {
+	id: text('id').primaryKey(),
+	userId: text('user_id')
+		.notNull()
+		.references(() => user_table.id),
+	expires: blob('expires', { mode: 'bigint' }).notNull()
 });
 
 export const userOneRelations = relations(user_table, ({ one }) => ({

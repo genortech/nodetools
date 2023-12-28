@@ -1,65 +1,76 @@
 <script lang="ts">
-	import { Input } from '$lib/components/ui/input';
+	import * as Form from '$lib/components/ui/form';
 	import * as Card from '$lib/components/ui/card';
-	import { Label } from '$lib/components/ui/label';
-	import { Mail } from 'lucide-svelte';
-	import { Button } from '$lib/components/ui/button';
 
-	export let form;
+	import * as Alert from '$lib/components/ui/alert';
+	import type { SuperValidated } from 'sveltekit-superforms';
+	import { Loader2 } from 'lucide-svelte';
+	import { AlertCircle } from 'lucide-svelte';
+	import { userSchema } from '$lib/config/zod-schema';
+
+	const signUpSchema = userSchema.pick({
+		email: true,
+		password: true
+	});
+
+	type SignUpSchema = typeof signUpSchema;
+
+	export let form: SuperValidated<SignUpSchema>;
 </script>
 
-<Card.Root class="w-[400px]">
-	<Card.Header>
-		<Card.Title>Example Signup</Card.Title>
-		<Card.Description>Showcasing how to use the signup in SvelteKit with Lucia</Card.Description>
-	</Card.Header>
-	<Card.Content>
-		<form class="flex flex-col gap-y-4" method="POST">
-			<div class="flex flex-col w-full gap-1.5">
-				<Label for="email">email</Label>
-				<Input type="email" id="email" placeholder="email" name="email" required />
-			</div>
-
-			<div class="flex flex-col w-full gap-1.5">
-				<Label for="firstName">first name</Label>
-				<Input type="text" id="firstName" placeholder="first name" name="firstName" />
-			</div>
-
-			<div class="flex flex-col w-full gap-1.5">
-				<Label for="lastName">last name</Label>
-				<Input type="text" id="lastName" placeholder="last name" name="lastName" />
-			</div>
-
-			<div class="flex flex-col w-full gap-1.5">
-				<Label for="password">password</Label>
-				<Input type="password" id="password" placeholder="password" name="password" required />
-			</div>
-
-			<div class="flex flex-col w-full gap-1.5">
-				<Label for="confirmPassword">password</Label>
-				<Input
-					type="password"
-					id="confirmPassword"
-					placeholder="confirm password"
-					name="confirmPassword"
-					required
-				/>
-			</div>
-
-			{#if form?.message}
-				<span class="text-sm font-light text-red-600">{form?.message}</span>
-			{/if}
-
-			<div class="flex flex-row justify-center items-center w-full gap-1.5">
-				<Button type="submit" class="bg-blue-800 dark:text-white hover:text-black">
-					<Mail class="mr-2 h-4 w-4" />
-					Sign Up with Email
-				</Button>
-			</div>
-		</form>
-	</Card.Content>
-
-	<Card.Footer class="w-full flex items-center justify-center">
-		<Button variant="link" href="/signin">Sign In</Button>
-	</Card.Footer>
-</Card.Root>
+<div class="flex items-center justify-center mx-auto max-w-2xl">
+	<Form.Root let:submitting let:errors method="POST" {form} schema={signUpSchema} let:config>
+		<Card.Root>
+			<Card.Header class="space-y-1">
+				<Card.Title class="text-2xl">Create an account</Card.Title>
+				<Card.Description
+					>Already have an account? <a href="/signin" class="underline">Sign in here.</a
+					></Card.Description
+				>
+			</Card.Header>
+			<Card.Content class="grid gap-4">
+				{#if errors?._errors?.length}
+					<Alert.Root variant="destructive">
+						<AlertCircle class="h-4 w-4" />
+						<Alert.Title>Error</Alert.Title>
+						<Alert.Description>
+							{#each errors._errors as error}
+								{error}
+							{/each}
+						</Alert.Description>
+					</Alert.Root>
+				{/if}
+				<Form.Field {config} name="email">
+					<Form.Item>
+						<Form.Label>Email</Form.Label>
+						<Form.Input />
+						<Form.Validation />
+					</Form.Item>
+				</Form.Field>
+				<Form.Field {config} name="password">
+					<Form.Item>
+						<Form.Label>Password</Form.Label>
+						<Form.Input type="password" />
+						<Form.Validation />
+					</Form.Item>
+				</Form.Field>
+				<Form.Item class="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+					<div class="space-y-1 leading-none">
+						<Form.Label>By Signing up, you agree to the terms and privacy policy.</Form.Label>
+						<Form.Description>
+							You agree to the <a href="/terms" class="text-primaryHover underline">terms</a> and
+							<a href="/privacy" class="text-primaryHover underline">privacy policy</a>.
+						</Form.Description>
+					</div>
+				</Form.Item>
+			</Card.Content>
+			<Card.Footer>
+				<Form.Button class="w-full" disabled={submitting}
+					>{#if submitting}
+						<Loader2 class="mr-2 h-4 w-4 animate-spin" />
+						Please wait{:else}Sign Up{/if}
+				</Form.Button>
+			</Card.Footer>
+		</Card.Root>
+	</Form.Root>
+</div>

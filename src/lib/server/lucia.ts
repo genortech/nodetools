@@ -16,7 +16,10 @@ export const auth = lucia({
 	middleware: sveltekit(),
 	getUserAttributes: (data) => {
 		return {
-			email: data.email
+			email: data.email,
+			emailVerified: Boolean(data.verified),
+			recieved_email: Boolean(data.recieved_email),
+			is_admin: Boolean(data.is_admin)
 		};
 	}
 });

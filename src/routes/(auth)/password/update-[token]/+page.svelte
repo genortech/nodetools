@@ -1,38 +1,36 @@
 <script lang="ts">
 	import * as Form from '$lib/components/ui/form';
 	import * as Card from '$lib/components/ui/card';
-
 	import * as Alert from '$lib/components/ui/alert';
 	import type { SuperValidated } from 'sveltekit-superforms';
 	import { Loader2 } from 'lucide-svelte';
 	import { AlertCircle } from 'lucide-svelte';
-	import { userSchema } from '$lib/config/zod-schema';
+	import { userUpdatePasswordSchema } from '$lib/config/zod-schema';
 
-	const signInSchema = userSchema.pick({
-		email: true,
-		password: true
-	});
+	type UserUpdatePasswordSchema = typeof userUpdatePasswordSchema;
 
-	type SignInSchema = typeof signInSchema;
-
-	export let form: SuperValidated<SignInSchema>;
+	export let form: SuperValidated<UserUpdatePasswordSchema>;
 </script>
 
 <div class="flex items-center justify-center mx-auto max-w-2xl">
-	<Form.Root let:submitting let:errors method="POST" {form} schema={signInSchema} let:config>
+	<Form.Root
+		let:submitting
+		let:errors
+		method="POST"
+		{form}
+		schema={userUpdatePasswordSchema}
+		let:config
+	>
 		<Card.Root>
 			<Card.Header class="space-y-1">
-				<Card.Title class="text-2xl">Sign in</Card.Title>
-				<Card.Description
-					>Don't have an account yet? <a href="/signup" class="underline">Sign up here.</a
-					></Card.Description
-				>
+				<Card.Title class="text-2xl">Change Your Password</Card.Title>
+				<Card.Description>Choose a new password for your account.</Card.Description>
 			</Card.Header>
 			<Card.Content class="grid gap-4">
 				{#if errors?._errors?.length}
 					<Alert.Root variant="destructive">
 						<AlertCircle class="h-4 w-4" />
-						<Alert.Title>Error</Alert.Title>
+						<Alert.Title>Change Password Problem</Alert.Title>
 						<Alert.Description>
 							{#each errors._errors as error}
 								{error}
@@ -40,32 +38,29 @@
 						</Alert.Description>
 					</Alert.Root>
 				{/if}
-				<Form.Field {config} name="email">
+
+				<Form.Field {config} name="password">
 					<Form.Item>
-						<Form.Label>Email</Form.Label>
-						<Form.Input />
+						<Form.Label>New Password</Form.Label>
+						<Form.Input type="password" />
 						<Form.Validation />
 					</Form.Item>
 				</Form.Field>
-				<Form.Field {config} name="password">
+				<Form.Field {config} name="confirmPassword">
 					<Form.Item>
-						<Form.Label>Password</Form.Label>
+						<Form.Label>Confirm New Password</Form.Label>
 						<Form.Input type="password" />
 						<Form.Validation />
 					</Form.Item>
 				</Form.Field>
 			</Card.Content>
 			<Card.Footer>
-				<div class="block w-full">
+				<div class="w-full">
 					<Form.Button class="w-full" disabled={submitting}
 						>{#if submitting}
 							<Loader2 class="mr-2 h-4 w-4 animate-spin" />
-							Please wait{:else}Sign In{/if}
+							Please wait{:else}Update Password{/if}
 					</Form.Button>
-
-					<div class="mt-6 text-center text-sm">
-						<a href="/password/reset" class="underline">Forgot your password?</a>
-					</div>
 				</div>
 			</Card.Footer>
 		</Card.Root>

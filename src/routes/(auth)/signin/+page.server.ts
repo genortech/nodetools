@@ -14,7 +14,11 @@ const signinSchema = userSchema.pick({
 export const load: PageServerLoad = async ({ locals }) => {
 	const session = await locals.auth.validate();
 
-	if (session) redirect(302, '/dashboard');
+	if (session) {
+		if (!session.user.verified) return redirect(302, '/verify/email');
+		redirect(302, '/dashboard');
+	}
+
 	const signinForm = await superValidate(signinSchema);
 	return { signinForm };
 };
@@ -30,7 +34,11 @@ export const actions: Actions = {
 		try {
 			// find user by key
 			// and validate password
-			const key = await auth.useKey('emailpass', signinForm.data.email, signinForm.data.password);
+			const key = await auth.useKey(
+				'email',
+				signinForm.data.email.toLowerCase(),
+				signinForm.data.password
+			);
 			const session = await auth.createSession({
 				userId: key.userId,
 				attributes: {}
@@ -54,7 +62,6 @@ export const actions: Actions = {
 		}
 		// redirect to
 		// make sure you don't throw inside a try/catch block!
-
 		return { signinForm };
 	}
 };
