@@ -5,7 +5,7 @@ import { project_table } from '$lib/server/db/schema/projects';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	const session = await locals.auth.validate();
-	if (!session) redirect(302, '/login');
+	if (!session) redirect(302, '/sigin');
 
 	return {
 		userId: session.user.userId,
@@ -19,7 +19,7 @@ export const actions: Actions = {
 		const formData = await request.formData();
 
 		console.log('POST', formData);
-		if (!session) redirect(302, '/login');
+		if (!session) redirect(302, '/signin');
 
 		type NewProject = typeof project_table.$inferInsert;
 
