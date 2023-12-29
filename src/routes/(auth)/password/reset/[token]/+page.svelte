@@ -2,10 +2,10 @@
 	import * as Form from '$lib/components/ui/form';
 	import * as Card from '$lib/components/ui/card';
 	import * as Alert from '$lib/components/ui/alert';
+	import { userUpdatePasswordSchema } from '$lib/config/zod-schema';
 	import type { SuperValidated } from 'sveltekit-superforms';
 	import { Loader2 } from 'lucide-svelte';
 	import { AlertCircle } from 'lucide-svelte';
-	import { userUpdatePasswordSchema } from '$lib/config/zod-schema';
 
 	type UserUpdatePasswordSchema = typeof userUpdatePasswordSchema;
 

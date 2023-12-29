@@ -15,7 +15,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 	const session = await locals.auth.validate();
 
 	if (session) {
-		if (!session.user.verified) return redirect(302, '/verify/email');
+		if (!session.user.emailVerified) return redirect(302, '/verify/email');
 		redirect(302, '/dashboard');
 	}
 
