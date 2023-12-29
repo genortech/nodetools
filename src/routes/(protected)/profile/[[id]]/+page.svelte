@@ -1,61 +1,89 @@
 <script lang="ts">
-	import type { PageData } from './$types';
-	import { page } from '$app/stores';
-	import { superForm } from 'sveltekit-superforms/client';
-	import SuperDebug from 'sveltekit-superforms/client/SuperDebug.svelte';
-	export let data: PageData;
+	import * as Form from '$lib/components/ui/form';
+	import * as Card from '$lib/components/ui/card';
+	import { Button } from '$lib/components/ui/button';
+	import * as Alert from '$lib/components/ui/alert';
+	import type { SuperValidated } from 'sveltekit-superforms';
+	import { Loader2 } from 'lucide-svelte';
+	import { AlertCircle } from 'lucide-svelte';
+	import { goto } from '$app/navigation';
+	import { userProfileSchema, userSchema } from '$lib/config/zod-schema';
+	export let data: any;
 
-	const { form, errors, constraints, enhance, delayed, message } = superForm(data.form);
+	const profileSchema = userSchema
+		.pick({
+			email: true
+		})
+		.merge(
+			userProfileSchema.pick({
+				firstName: true,
+				lastName: true,
+				profile: true,
+				avatarUrl: true
+			})
+		);
+
+	type ProfileSchema = typeof profileSchema;
+
+	export let form: SuperValidated<ProfileSchema>;
+	form = data.form;
 </script>
 
-<SuperDebug data={$form} />
-
-{#if $message}
-	<h3 class:invalid={$page.status >= 400}>{$message}</h3>
-{/if}
-
-<h2>{!$form.id ? 'Create' : 'Update'} user</h2>
-
-<form method="POST" use:enhance>
-	<input type="hidden" name="id" bind:value={$form.id} />
-
-	<label>
-		Name<br />
-		<input
-			name="name"
-			aria-invalid={$errors.name ? 'true' : undefined}
-			bind:value={$form.name}
-			{...$constraints.name}
-		/>
-		{#if $errors.name}<span class="invalid">{$errors.name}</span>{/if}
-	</label>
-
-	<label>
-		E-mail<br />
-		<input
-			name="email"
-			type="email"
-			aria-invalid={$errors.email ? 'true' : undefined}
-			bind:value={$form.email}
-			{...$constraints.email}
-		/>
-		{#if $errors.email}<span class="invalid">{$errors.email}</span>{/if}
-	</label>
-
-	<button>Submit</button>
-	{#if $delayed}Working...{/if}
-</form>
-
-{#if $form.id}
-	<button
-		name="delete"
-		on:click={(e) => !confirm('Are you sure?') && e.preventDefault()}
-		class="danger">Delete user</button
-	>
-{/if}
-
-<style>
-	.invalid {
-		color: red;
-	}
-</style>
+<div class="flex items-center justify-center mx-auto max-w-2xl">
+	<Form.Root let:submitting let:errors method="POST" {form} schema={profileSchema} let:config>
+		<Card.Root>
+			<Card.Header class="space-y-1">
+				<Card.Title class="text-2xl">Profile</Card.Title>
+				<Card.Description>Update your profile settings below.</Card.Description>
+			</Card.Header>
+			<Card.Content class="grid gap-4">
+				{#if errors?._errors?.length}
+					<Alert.Root variant="destructive">
+						<AlertCircle class="h-4 w-4" />
+						<Alert.Title>Error</Alert.Title>
+						<Alert.Description>
+							{#each errors._errors as error}
+								{error}
+							{/each}
+						</Alert.Description>
+					</Alert.Root>
+				{/if}
+				<Form.Field {config} name="firstName">
+					<Form.Item>
+						<Form.Label>First Name</Form.Label>
+						<Form.Input />
+						<Form.Validation />
+					</Form.Item>
+				</Form.Field>
+				<Form.Field {config} name="lastName">
+					<Form.Item>
+						<Form.Label>Last Name</Form.Label>
+						<Form.Input />
+						<Form.Validation />
+					</Form.Item>
+				</Form.Field>
+				<Form.Field {config} name="email">
+					<Form.Item>
+						<Form.Label>Email</Form.Label>
+						<Form.Input />
+						<Form.Validation />
+					</Form.Item>
+				</Form.Field>
+			</Card.Content>
+			<Card.Footer>
+				<div class="block w-full">
+					<Form.Button class="w-full" disabled={submitting}
+						>{#if submitting}
+							<Loader2 class="mr-2 h-4 w-4 animate-spin" />
+							Please wait{:else}Update profile{/if}
+					</Form.Button>
+					<div class="mt-6 text-center text-sm">
+						<Button on:click={() => goto('/password/reset')} class="w-full" variant="outline"
+							>Change your password</Button
+						>
+					</div>
+				</div>
+			</Card.Footer>
+		</Card.Root>
+	</Form.Root>
+</div>

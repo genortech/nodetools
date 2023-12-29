@@ -16,9 +16,7 @@ export const userSchema = z.object({
 		.string({ required_error: 'Password is required' })
 		.min(8, { message: 'Password must be at least 6 characters' })
 		.trim(),
-	role: z
-		.enum(['USER', 'PREMIUM', 'ADMIN'], { required_error: 'You must have a role' })
-		.default('USER'),
+	role: z.enum(['USER', 'ADMIN'], { required_error: 'You must have a role' }).default('USER'),
 	verified: z.boolean().default(false),
 	recieved_email: z.boolean().default(false),
 	confirmPassword: z
@@ -30,6 +28,16 @@ export const userSchema = z.object({
 });
 
 export type UserSchema = typeof userSchema;
+
+export const userProfileSchema = z.object({
+	id: z.string().regex(/^|d+$/),
+	firstName: z.string(),
+	lastName: z.string(),
+	profile: z.string(),
+	avatarUrl: z.string()
+});
+
+export type UserProfileSchema = typeof userProfileSchema;
 
 export const userUpdatePasswordSchema = userSchema
 	.pick({ password: true, confirmPassword: true })
@@ -51,7 +59,7 @@ export const userUpdatePasswordSchema = userSchema
 export type UserUpdatePasswordSchema = typeof userUpdatePasswordSchema;
 
 export const projectSchema = z.object({
-	id: z.string(),
+	id: z.string().regex(/^|d+$/),
 	prjctRef: z.string(),
 	prjctClient: z.string()
 });
