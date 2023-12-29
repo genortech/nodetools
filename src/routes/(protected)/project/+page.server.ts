@@ -1,11 +1,7 @@
 import { fail, redirect } from '@sveltejs/kit';
-
 import type { Actions, PageServerLoad } from './$types';
-import { auth } from '$lib/server/lucia';
 import { db } from '$lib/server/db/db';
-import { userProfile } from '$lib/server/db/schema/users';
-import { eq } from 'drizzle-orm';
-import { project } from '$lib/server/db/schema/projects';
+import { project_table } from '$lib/server/db/schema/projects';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	const session = await locals.auth.validate();
@@ -13,7 +9,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 
 	return {
 		userId: session.user.userId,
-		username: session.user.username
+		email: session.user.email
 	};
 };
 
@@ -25,10 +21,10 @@ export const actions: Actions = {
 		console.log('POST', formData);
 		if (!session) redirect(302, '/login');
 
-		type NewProject = typeof project.$inferInsert;
+		type NewProject = typeof project_table.$inferInsert;
 
 		const insertProject = async (newproject: NewProject) => {
-			return db.insert(project).values(newproject);
+			return db.insert(project_table).values(newproject);
 		};
 		const newProject: NewProject = {
 			prjctRef: formData.get('project_reference') as string,
