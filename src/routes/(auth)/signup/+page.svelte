@@ -1,12 +1,13 @@
 <script lang="ts">
 	import * as Form from '$lib/components/ui/form';
 	import * as Card from '$lib/components/ui/card';
-
 	import * as Alert from '$lib/components/ui/alert';
 	import type { SuperValidated } from 'sveltekit-superforms';
 	import { Loader2 } from 'lucide-svelte';
 	import { AlertCircle } from 'lucide-svelte';
 	import { userSchema } from '$lib/config/zod-schema';
+	import CardDescription from '$lib/components/ui/card/card-description.svelte';
+	import { Label } from '$lib/components/ui/label';
 
 	const signUpSchema = userSchema.pick({
 		email: true,
@@ -24,7 +25,7 @@
 			<Card.Header class="space-y-1">
 				<Card.Title class="text-2xl">Create an account</Card.Title>
 				<Card.Description
-					>Already have an account? <a href="/signin" class="underline">Sign in here.</a
+					>Already have an account? <a href="/auth/sign-in" class="underline">Sign in here.</a
 					></Card.Description
 				>
 			</Card.Header>
@@ -54,15 +55,15 @@
 						<Form.Validation />
 					</Form.Item>
 				</Form.Field>
-				<Form.Item class="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+				<Card.Content class="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
 					<div class="space-y-1 leading-none">
-						<Form.Label>By Signing up, you agree to the terms and privacy policy.</Form.Label>
-						<Form.Description>
-							You agree to the <a href="/terms" class="text-primaryHover underline">terms</a> and
+						<Card.Title>By Signing Up</Card.Title>
+						<Card.Description>
+							You agree to <a href="/terms" class="text-primaryHover underline">terms</a> and
 							<a href="/privacy" class="text-primaryHover underline">privacy policy</a>.
-						</Form.Description>
+						</Card.Description>
 					</div>
-				</Form.Item>
+				</Card.Content>
 			</Card.Content>
 			<Card.Footer>
 				<Form.Button class="w-full" disabled={submitting}

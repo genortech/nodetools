@@ -17,10 +17,10 @@
 			<p class="text-muted-foreground">Here's a list of your tasks for this month!</p>
 		</div>
 		<div class="flex items-center space-x-2">
-			<UserNav />
+			<!-- <UserNav /> -->
 		</div>
 	</div>
-	<DataTable {data} />
+	<!-- <DataTable {data} /> -->
 </div>
 
 <!-- <div class="p-4 flex flex-col justify-between h-full"> -->

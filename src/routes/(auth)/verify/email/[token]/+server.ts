@@ -7,11 +7,15 @@ export const GET: RequestHandler = async ({ params, locals }) => {
 	const { token } = params;
 	try {
 		const userId = await validateEmailVerificationToken(token);
+		console.log('Validated token', userId);
 		const user = await auth.getUser(userId);
+		console.log('Got User', user);
 		await auth.invalidateAllUserSessions(user.userId);
+		console.log('Email validated');
 		await auth.updateUserAttributes(user.userId, {
 			verified: Number(true) // `Number(true)` if stored as an integer
 		});
+		console.log('Create Session');
 		const session = await auth.createSession({
 			userId: user.userId,
 			attributes: {}

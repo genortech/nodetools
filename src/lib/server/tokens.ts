@@ -36,12 +36,15 @@ export const validateEmailVerificationToken = async (token: string) => {
 			.from(emailVerification_table)
 			.where(eq(emailVerification_table.id, token));
 		if (!storedToken) throw new Error('Invalid token');
+		console.log('Token deleting');
 		await trx.delete(emailVerification_table).where(eq(emailVerification_table.id, token));
+		console.log('Token deleted');
 		return storedToken;
 	});
+	console.log('Stored Token', storedToken);
 	const tokenExpires = Number(storedToken.expires); // bigint => number conversion
 	if (!isWithinExpiration(tokenExpires)) {
 		throw new Error('Expired token');
 	}
-	return storedToken.id;
+	return storedToken.userId;
 };

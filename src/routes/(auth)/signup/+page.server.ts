@@ -1,13 +1,12 @@
 // routes/signup/+page.server.ts
-import { auth } from '$lib/server/lucia';
-import { fail, redirect } from '@sveltejs/kit';
-
-import type { PageServerLoad, Actions } from './$types';
-import { LibsqlError } from '@libsql/client';
-import { userSchema } from '$lib/config/zod-schema';
-import { superValidate } from 'sveltekit-superforms/server';
-import { generateEmailVerificationToken } from '$lib/server/tokens';
 import { sendVerificationEmail } from '$lib/config/email-message';
+import { userSchema } from '$lib/config/zod-schema';
+import { auth } from '$lib/server/lucia';
+import { generateEmailVerificationToken } from '$lib/server/tokens';
+import { LibsqlError } from '@libsql/client';
+import { fail, redirect } from '@sveltejs/kit';
+import { superValidate } from 'sveltekit-superforms/server';
+import type { Actions, PageServerLoad } from './$types';
 
 const signupSchema = userSchema.pick({
 	email: true,
