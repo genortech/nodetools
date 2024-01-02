@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { DotsHorizontal } from 'radix-icons-svelte';
+	import { Dot } from 'lucide-svelte';
 	import { Button } from '$lib/components/ui/button';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { labels } from './data';
@@ -16,7 +16,9 @@
 			builders={[builder]}
 			class="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
 		>
-			<DotsHorizontal class="h-4 w-4" />
+			<Dot class="h-4 w-4" />
+			<Dot class="h-4 w-4" />
+			<Dot class="h-4 w-4" />
 			<span class="sr-only">Open menu</span>
 		</Button>
 	</DropdownMenu.Trigger>

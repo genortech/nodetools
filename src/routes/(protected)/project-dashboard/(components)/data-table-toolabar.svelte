@@ -2,8 +2,8 @@
 	import { DataTableFacetedFilter, DataTableViewOptions } from '.';
 	import type { AnyPlugins } from 'svelte-headless-table/lib/types/TablePlugin';
 	import type { TableViewModel } from 'svelte-headless-table/lib/createViewModel';
-	import { Cross2 } from 'radix-icons-svelte';
-	import { statuses, priorities } from '../(data)/data';
+	import { X } from 'lucide-svelte';
+	import { statuses, priorities } from './data';
 	import type { Writable } from 'svelte/store';
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
@@ -59,7 +59,7 @@
 				class="h-8 px-2 lg:px-3"
 			>
 				Reset
-				<Cross2 class="ml-2 h-4 w-4" />
+				<X class="ml-2 h-4 w-4" />
 			</Button>
 		{/if}
 	</div>

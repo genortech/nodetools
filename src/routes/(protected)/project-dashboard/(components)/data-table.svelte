@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { get, readable } from 'svelte/store';
-	import { Render, Subscribe, createRender, createTable } from 'svelte-headless-table';
+	import { Render, Subscribe, createRender, createTable, DataBodyRow } from 'svelte-headless-table';
 	import * as Table from '$lib/components/ui/table';
 	import {
 		addColumnFilters,

@@ -15,8 +15,8 @@ dependencies:
     specifier: ^3.5.0
     version: 3.5.0(lucia@2.7.6)
   bits-ui:
-    specifier: ^0.12.0
-    version: 0.12.0(svelte@4.2.8)
+    specifier: ^0.13.0
+    version: 0.13.0(svelte@4.2.8)
   clsx:
     specifier: ^2.0.0
     version: 2.0.0
@@ -44,6 +44,9 @@ dependencies:
   resend:
     specifier: ^2.1.0
     version: 2.1.0
+  svelte-sonner:
+    specifier: ^0.3.9
+    version: 0.3.9(svelte@4.2.8)
   tailwind-merge:
     specifier: ^2.2.0
     version: 2.2.0
@@ -2609,8 +2612,8 @@ packages:
       svelte: 4.2.8
     dev: false
 
-  /@melt-ui/svelte@0.65.2(svelte@4.2.8):
-    resolution: {integrity: sha512-BpsSl9Bjp1++8U3+LaDOFUoX/PFQ9N7QWFhlFdUEZduhrbVyU70v9A459SKrQ+esFSjvh1AvqJYkMAUJXJlAmQ==}
+  /@melt-ui/svelte@0.67.0(svelte@4.2.8):
+    resolution: {integrity: sha512-fd9PsDE6sKbeyExagqH0nOpZEnDqyr2efbkjfmCRRYXVW5vlDEOPaSB+mg4Tjch121102sFH1Od+MlXwmeHy3A==}
     peerDependencies:
       svelte: '>=3 <5'
     dependencies:
@@ -3515,13 +3518,13 @@ packages:
       file-uri-to-path: 1.0.0
     dev: true
 
-  /bits-ui@0.12.0(svelte@4.2.8):
-    resolution: {integrity: sha512-/waSHjQM+zCrLsq/3ncxuc6vMzxzE783uhtZKFTF/8xb4sZJ/QZi4Yr7r5aJNghGais1E+fmxpk9lvdft740fw==}
+  /bits-ui@0.13.0(svelte@4.2.8):
+    resolution: {integrity: sha512-XMvGKhJQMvSWqaan0eaIx1uAVcFBpImgO6xf+XTb7UhqdzbH0//6be4DeR1nRUpIU70XoU1B7i3lMPrTWg37ng==}
     peerDependencies:
       svelte: ^4.0.0
     dependencies:
       '@internationalized/date': 3.5.1
-      '@melt-ui/svelte': 0.65.2(svelte@4.2.8)
+      '@melt-ui/svelte': 0.67.0(svelte@4.2.8)
       nanoid: 5.0.4
       svelte: 4.2.8
     dev: false
@@ -7753,6 +7756,14 @@ packages:
       svelte: 4.2.8
       svelte-subscribe: 1.0.6(svelte@4.2.8)
     dev: true
+
+  /svelte-sonner@0.3.9(svelte@4.2.8):
+    resolution: {integrity: sha512-uwTidxYTZ5Sp8UjGu7N150gLG8EV2SS81rXd8deXpFDMTCKHGxE22UHV0WJxw64SdJHNfXRKorkR5wWZDkh/nA==}
+    peerDependencies:
+      svelte: '>=3 <5'
+    dependencies:
+      svelte: 4.2.8
+    dev: false
 
   /svelte-subscribe@1.0.6(svelte@4.2.8):
     resolution: {integrity: sha512-legaLPjOGAN3G6xUa8+1ms3qo3lE4nfypZe1CedyOEoUUwWPfmzJHuBXtwdro4xUf4kezUbzjtyK1UOeZDksog==}

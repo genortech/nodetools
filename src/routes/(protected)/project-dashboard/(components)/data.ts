@@ -2,12 +2,12 @@ import {
 	ArrowDown,
 	ArrowRight,
 	ArrowUp,
-	CheckCircled,
+	CheckCircle2,
 	Circle,
-	CrossCircled,
-	QuestionMarkCircled,
-	Stopwatch
-} from 'radix-icons-svelte';
+	XCircle,
+	HelpCircle,
+	Timer
+} from 'lucide-svelte';
 
 export const labels = [
 	{
@@ -26,29 +26,29 @@ export const labels = [
 
 export const statuses = [
 	{
-		value: 'backlog',
-		label: 'Backlog',
-		icon: QuestionMarkCircled
+		value: 'ongoing',
+		label: 'Ongoing',
+		icon: HelpCircle
 	},
 	{
-		value: 'todo',
-		label: 'Todo',
+		value: 'not started',
+		label: 'Not Started',
 		icon: Circle
 	},
 	{
 		value: 'in progress',
 		label: 'In Progress',
-		icon: Stopwatch
+		icon: Timer
 	},
 	{
-		value: 'done',
-		label: 'Done',
-		icon: CheckCircled
+		value: 'completed',
+		label: 'Completed',
+		icon: CheckCircle2
 	},
 	{
 		value: 'canceled',
 		label: 'Canceled',
-		icon: CrossCircled
+		icon: XCircle
 	}
 ];
 

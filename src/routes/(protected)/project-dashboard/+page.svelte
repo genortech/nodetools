@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
+	import DataTable from './(components)/data-table.svelte';
 	console.log('Loading Project Dashboard');
 	export let data;
 </script>
@@ -16,7 +17,7 @@
 			<!-- <UserNav /> -->
 		</div>
 	</div>
-	<!-- <DataTable {data} /> -->
+	<DataTable {data} />
 </div>
 
 <!-- <div class="p-4 flex flex-col justify-between h-full"> -->

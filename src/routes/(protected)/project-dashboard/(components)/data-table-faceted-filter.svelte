@@ -1,8 +1,12 @@
 <script lang="ts">
-	import { PlusCircled, Check } from 'radix-icons-svelte';
+	import { XCircle, Check } from 'lucide-svelte';
 	import * as Command from '$lib/components/ui/command';
 	import * as Popover from '$lib/components/ui/popover';
+	import { Button } from '$lib/components/ui/button';
+	import { Separator } from '$lib/components/ui/separator';
+	import { Badge } from '$lib/components/ui/badge';
 	import { cn } from '$lib/utils';
+	import { statuses } from './data';
 
 	export let filterValues: string[] = [];
 	export let title: string;
@@ -22,7 +26,7 @@
 <Popover.Root bind:open positioning={{ placement: 'bottom-start' }}>
 	<Popover.Trigger asChild let:builder>
 		<Button builders={[builder]} variant="outline" size="sm" class="h-8 border-dashed">
-			<PlusCircled class="mr-2 h-4 w-4" />
+			<XCircle class="mr-2 h-4 w-4" />
 			{title}
 
 			{#if filterValues.length > 0}
