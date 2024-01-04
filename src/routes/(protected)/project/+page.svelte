@@ -8,16 +8,19 @@
 
 <h1>New Project</h1>
 <div>
+	<!-- <div> -->
+	<!-- 	<a href="/project-dashboard">Go Back to Dashboard</a> -->
+	<!-- </div> -->
 	<div>
-		<a href="/project-dashboard">Dashboard</a>
-	</div>
-	<div>
-		<form method="POST">
+		<form method="POST" action="?/newproject">
 			<Label for="project_reference">Project Reference</Label>
 			<Input name="project_reference" id="project_reference" /><br />
+			<Label for="project_location">Project Location</Label>
+			<Input name="project_location" id="project_location" /><br />
 			<Label for="client_name">Client Name</Label>
 			<Input name="client_name" id="client_name" /><br />
 			<Button type="submit">Create Project</Button>
+			<Button formaction="?/cancel" type="submit">Cancel</Button>
 		</form>
 	</div>
 </div>

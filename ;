@@ -36,6 +36,9 @@ export const actions: Actions = {
 		redirect(302, '/project-dashboard');
 	},
 	cancel: async (request) => {
+		const formData = await request.formData();
+		console.log(formData);
+
 		redirect(302, '/project-dashboard');
 	}
 };

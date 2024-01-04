@@ -15,9 +15,9 @@
 <ModeWatcher />
 <body class="flex justify-between w-full flex-col min-h-screen">
 	<header class="flex flex-row items-center justify-between px-12 py-4">
-		<a class="text-xl font-extrabold" href="/"
-			><img src="/logo/logo.png" alt="Logo" width="64" height="64" /></a
-		>
+		<a class="text-xl font-extrabold" href="/">
+			<!-- <img src="/logo/logo.png" alt="Logo" width="64" height="64" /> -->
+		</a>
 		<div class="flex flex-row gap-x-4 items-center">
 			<a href="/contact" class="font-light hover:underline">Contact</a>
 			<a href="/about" class="font-light hover:underline">About</a>
@@ -48,8 +48,15 @@
 	</header>
 	<slot />
 	<footer class="flex items-center justify-center py-4">
-		<a class=" font-light hover:underline" href="https://nodegroup.com.au" target="_blank"
-			>Company of Node Group Pty Ltd &copy;
-		</a>
+		<div>
+			<a class=" font-light hover:underline" href="/support" target="_blank">FAQ and Support</a>
+		</div>
+		<span> </span>
+		<br />
+		<div>
+			<a class=" font-light hover:underline" href="https://nodegroup.com.au" target="_blank"
+				>Company of Node Group Pty Ltd &copy;
+			</a>
+		</div>
 	</footer>
 </body>

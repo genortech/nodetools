@@ -18,7 +18,7 @@ const profileSchema = userSchema
 		})
 	);
 
-export const load = async ({ urls, params }) => {
+export const load = async ({ params }) => {
 	const currentUser = await db.select().from(user_table).where(eq(user_table.id, params.id));
 
 	if (currentUser[0].id && params.id) {
