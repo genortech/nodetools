@@ -31,5 +31,6 @@ export const actions: Actions = {
 		await auth.invalidateSession(session.sessionId); // invalidate session
 		locals.auth.setSession(null); // remove cookie
 		redirect(302, '/login'); // redirect to login page
-	}
+	},
+	delete: async ({ request, locals }) => {}
 };
