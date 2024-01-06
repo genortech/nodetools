@@ -3,10 +3,10 @@
 	import { Button } from '$lib/components/ui/button';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { labels } from './data';
-	import { projectSchema, type Project } from '$lib/config/zod-schema';
+	import { taskSchema, type Task } from './schema';
 
-	export let row: Project;
-	const project = projectSchema.parse(row);
+	export let row: Task;
+	const task = taskSchema.parse(row);
 </script>
 
 <DropdownMenu.Root>
@@ -16,8 +16,6 @@
 			builders={[builder]}
 			class="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
 		>
-			<Dot class="h-4 w-4" />
-			<Dot class="h-4 w-4" />
 			<Dot class="h-4 w-4" />
 			<span class="sr-only">Open menu</span>
 		</Button>
@@ -30,7 +28,7 @@
 		<DropdownMenu.Sub>
 			<DropdownMenu.SubTrigger>Labels</DropdownMenu.SubTrigger>
 			<DropdownMenu.SubContent>
-				<DropdownMenu.RadioGroup value={project.prjctRef}>
+				<DropdownMenu.RadioGroup value={task.label}>
 					{#each labels as label}
 						<DropdownMenu.RadioItem value={label.value}>
 							{label.label}

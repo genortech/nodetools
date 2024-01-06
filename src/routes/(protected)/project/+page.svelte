@@ -2,12 +2,12 @@
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
-
-	export let data;
 </script>
 
-<h1>New Project</h1>
-<div>
+<div class="flex-1 space-y-4 p-8 pt-6">
+	<div class="flex items-center justify-between space-y-2">
+		<h2 class="text-3xl font-bold tracking-tight">New Project</h2>
+	</div>
 	<!-- <div> -->
 	<!-- 	<a href="/project-dashboard">Go Back to Dashboard</a> -->
 	<!-- </div> -->
@@ -20,7 +20,7 @@
 			<Label for="client_name">Client Name</Label>
 			<Input name="client_name" id="client_name" /><br />
 			<Button type="submit">Create Project</Button>
-			<Button formaction="?/cancel" type="submit">Cancel</Button>
+			<Button href="/project-dashboard">Cancel</Button>
 		</form>
 	</div>
 </div>

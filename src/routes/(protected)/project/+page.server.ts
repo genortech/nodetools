@@ -34,8 +34,5 @@ export const actions: Actions = {
 		};
 		await insertProject(newProject);
 		redirect(302, '/project-dashboard');
-	},
-	cancel: async (request) => {
-		redirect(302, '/project-dashboard');
 	}
 };

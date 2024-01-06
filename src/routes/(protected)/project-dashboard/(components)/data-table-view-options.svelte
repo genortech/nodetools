@@ -2,11 +2,11 @@
 	import { SlidersHorizontal } from 'lucide-svelte';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import type { AnyPlugins } from 'svelte-headless-table/lib/types/TablePlugin';
-	import type { TableViewModel } from 'svelte-headless-table/lib/createViewModel';
 	import { Button } from '$lib/components/ui/button';
-	import type { Project } from '$lib/config/zod-schema';
+	import type { Task } from './schema';
+	import type { TableViewModel } from 'svelte-headless-table/lib/createViewModel';
 
-	export let tableModel: TableViewModel<Project, AnyPlugins>;
+	export let tableModel: TableViewModel<Task, AnyPlugins>;
 	const { pluginStates, flatColumns } = tableModel;
 	const { hiddenColumnIds } = pluginStates.hide;
 

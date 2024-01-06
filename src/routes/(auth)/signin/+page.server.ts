@@ -16,7 +16,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 
 	if (session) {
 		if (!session.user.emailVerified) return redirect(302, '/verify/email');
-		redirect(302, '/dashboard');
+		redirect(302, '/project-dashboard');
 	}
 
 	const signinForm = await superValidate(signinSchema);

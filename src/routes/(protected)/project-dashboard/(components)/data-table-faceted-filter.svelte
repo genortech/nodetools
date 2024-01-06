@@ -23,7 +23,7 @@
 	};
 </script>
 
-<Popover.Root bind:open positioning={{ placement: 'bottom-start' }}>
+<Popover.Root bind:open>
 	<Popover.Trigger asChild let:builder>
 		<Button builders={[builder]} variant="outline" size="sm" class="h-8 border-dashed">
 			<XCircle class="mr-2 h-4 w-4" />
@@ -50,7 +50,7 @@
 			{/if}
 		</Button>
 	</Popover.Trigger>
-	<Popover.Content class="w-[200px] p-0">
+	<Popover.Content class="w-[200px] p-0" align="start" side="bottom">
 		<Command.Root>
 			<Command.Input placeholder={title} />
 			<Command.List>

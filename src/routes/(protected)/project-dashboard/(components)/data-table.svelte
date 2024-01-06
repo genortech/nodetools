@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { get, readable } from 'svelte/store';
-	import { Render, Subscribe, createRender, createTable, DataBodyRow } from 'svelte-headless-table';
+	import { Render, Subscribe, createRender, createTable } from 'svelte-headless-table';
 	import * as Table from '$lib/components/ui/table';
 	import {
 		addColumnFilters,
@@ -20,9 +20,9 @@
 		DataTableToolbar,
 		DataTablePagination
 	} from '.';
-	import type { Project } from '$lib/config/zod-schema';
+	import type { Task } from './schema';
 
-	export let data: Project[];
+	export let data: Task[];
 
 	const table = createTable(readable(data), {
 		select: addSelectedRows(),
