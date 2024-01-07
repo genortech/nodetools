@@ -7,9 +7,9 @@
 	import type { Writable } from 'svelte/store';
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
-	import type { Task } from './schema';
+	import type { Project } from '$lib/config/zod-schema';
 
-	export let tableModel: TableViewModel<Task, AnyPlugins>;
+	export let tableModel: TableViewModel<Project, AnyPlugins>;
 
 	const { pluginStates } = tableModel;
 	const {

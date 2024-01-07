@@ -12,6 +12,7 @@
 	<div class="flex items-center justify-between space-y-2">
 		<h2 class="text-3xl font-bold tracking-tight">Project Dashboard</h2>
 		<div class="flex items-center space-x-2">
+			<Button size="sm">Create New Project</Button>
 			<Button size="sm">
 				<Download class="mr-2 h-4 w-4" />
 				Download
@@ -32,7 +33,7 @@
 	<!-- 	<div class="p-4 flex flex-col justify-between h-full"> -->
 	<!-- 		<div class="h-1/10 w-full flex items-center flex-row justify-end"> -->
 	<!-- 			<a -->
-	<!-- 				href="/project" -->
+	<!-- 				href="/project/create-new" -->
 	<!-- 				class="bg-green-300 px-3 py-1 rounded-full hover:bg-green-400 hover:cursor text-white" -->
 	<!-- 				>Create A New Project</a -->
 	<!-- 			> -->

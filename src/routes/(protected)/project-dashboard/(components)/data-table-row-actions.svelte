@@ -3,10 +3,10 @@
 	import { Button } from '$lib/components/ui/button';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { labels } from './data';
-	import { taskSchema, type Task } from './schema';
+	import { projectSchema, type Project } from '$lib/config/zod-schema';
 
-	export let row: Task;
-	const task = taskSchema.parse(row);
+	export let row: Project;
+	const task = projectSchema.parse(row);
 </script>
 
 <DropdownMenu.Root>

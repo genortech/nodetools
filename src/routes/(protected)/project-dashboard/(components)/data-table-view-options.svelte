@@ -3,10 +3,10 @@
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import type { AnyPlugins } from 'svelte-headless-table/lib/types/TablePlugin';
 	import { Button } from '$lib/components/ui/button';
-	import type { Task } from './schema';
 	import type { TableViewModel } from 'svelte-headless-table/lib/createViewModel';
+	import type { Project } from '$lib/config/zod-schema';
 
-	export let tableModel: TableViewModel<Task, AnyPlugins>;
+	export let tableModel: TableViewModel<Project, AnyPlugins>;
 	const { pluginStates, flatColumns } = tableModel;
 	const { hiddenColumnIds } = pluginStates.hide;
 
@@ -18,7 +18,7 @@
 		.filter(([, hide]) => !hide)
 		.map(([id]) => id);
 
-	const hidableCols = ['title', 'status', 'priority'];
+	const hidableCols = ['location', 'status', 'priority'];
 </script>
 
 <DropdownMenu.Root>

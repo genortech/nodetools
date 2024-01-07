@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@internationalized/date':
+    specifier: ^3.5.1
+    version: 3.5.1
   '@libsql/client':
     specifier: 0.3.5
     version: 0.3.5

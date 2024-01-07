@@ -59,9 +59,14 @@ export const userUpdatePasswordSchema = userSchema
 export type UserUpdatePasswordSchema = typeof userUpdatePasswordSchema;
 
 export const projectSchema = z.object({
-	id: z.string().regex(/^|d+$/),
+	// id: z.string().regex(/^|d+$/),
+	id: z.number(),
 	prjctRef: z.string(),
-	prjctClient: z.string()
+	prjctClient: z.string(),
+	prjctLocation: z.string(),
+	status: z.string(),
+	label: z.string(),
+	priority: z.string()
 });
 
 export type Project = z.infer<typeof projectSchema>;

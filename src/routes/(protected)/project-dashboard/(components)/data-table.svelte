@@ -20,9 +20,9 @@
 		DataTableToolbar,
 		DataTablePagination
 	} from '.';
-	import type { Task } from './schema';
+	import type { Project } from '$lib/config/zod-schema';
 
-	export let data: Task[];
+	export let data: Project[];
 
 	const table = createTable(readable(data), {
 		select: addSelectedRows(),
@@ -65,11 +65,11 @@
 			}
 		}),
 		table.column({
-			accessor: 'id',
+			accessor: 'prjctRef',
 			header: () => {
-				return 'Task';
+				return 'Project Reference';
 			},
-			id: 'task',
+			id: 'prjctRef',
 			plugins: {
 				sort: {
 					disable: true
@@ -77,9 +77,9 @@
 			}
 		}),
 		table.column({
-			accessor: 'title',
-			header: 'Title',
-			id: 'title',
+			accessor: 'prjctLocation',
+			header: 'Location',
+			id: 'prjctLocation',
 			cell: ({ value, row }) => {
 				if (row.isData()) {
 					return createRender(DataTableTitleCell, {
