@@ -5,7 +5,7 @@ import { redirect, type Handle } from '@sveltejs/kit';
 //import * as SentryNode from '@sentry/node';
 import type { HandleServerError } from '@sveltejs/kit';
 
-import log from '$lib/server/log';
+// import log from '$lib/server/log';
 
 /*SentryNode.init({
 	dsn: 'https://8c3bc4d0fd5c4d64b8e36187fa9150de@o516805.ingest.sentry.io/4505106025545728',
@@ -26,7 +26,7 @@ export const handleError: HandleServerError = async ({ error, event }) => {
 	//@ts-ignore
 	event.locals.errorStackTrace = error?.stack || undefined;
 	event.locals.errorId = errorId;
-	log(500, event);
+	// log(500, event);
 
 	/*SentryNode.captureException(error, {
 		contexts: { sveltekit: { event, errorId } }
@@ -40,6 +40,25 @@ export const handleError: HandleServerError = async ({ error, event }) => {
 
 export const handle: Handle = async ({ event, resolve }) => {
 	// we can pass `event` because we used the SvelteKit middleware
+	const startTimer = Date.now();
+	event.locals.startTimer = startTimer;
 	event.locals.auth = auth.handleRequest(event);
-	return await resolve(event);
+	{
+		const session = await event.locals.auth.validate();
+		const user = session?.user;
+		if (user) {
+			event.locals.user = user;
+		}
+		if (event.route.id?.startsWith('/(protected)')) {
+			if (!user) throw redirect(302, '/signin');
+			if (!user.emailVerified) throw redirect(302, '/verify/email');
+		}
+		if (event.route.id?.startsWith('/(admin)')) {
+			if (user?.is_admin !== true) throw redirect(302, '/signin');
+		}
+	}
+
+	const response = await resolve(event);
+	// log(response.status, event);
+	return response;
 };

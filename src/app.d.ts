@@ -5,6 +5,7 @@ declare global {
 	namespace App {
 		interface Locals {
 			auth: import('lucia').AuthRequest;
+			user: Lucia.UserAttributes;
 			startTimer: number;
 			error: string;
 			errorId: string;
