@@ -1,5 +1,6 @@
 <script lang="ts">
 	import * as Card from '$lib/components/ui/card';
+	import { APP_NAME } from '$lib/config/constants';
 	import type { PageData } from './$types';
 
 	let maxdevModuleStatus = false;
@@ -18,7 +19,7 @@
 			<h1 class="text-6xl font-bold">
 				Welcome to <span
 					class="bg-gradient-to-r from-red-600 via-orange-500 to-purple-400 text-transparent bg-clip-text"
-					>NodeTools</span
+					>{APP_NAME}</span
 				>
 			</h1>
 		</div>

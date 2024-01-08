@@ -8,7 +8,7 @@
 	import { AlertCircle } from 'lucide-svelte';
 	import { goto } from '$app/navigation';
 	import { userProfileSchema, userSchema } from '$lib/config/zod-schema';
-	export let data: any;
+	export let data;
 
 	const profileSchema = userSchema
 		.pick({
