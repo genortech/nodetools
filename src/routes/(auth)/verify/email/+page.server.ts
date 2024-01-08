@@ -5,7 +5,7 @@ import { sendVerificationEmail } from '$lib/config/email-message';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	const session = await locals.auth.validate();
-	if (!session) throw redirect(302, '/login');
+	if (!session) throw redirect(302, '/signin');
 	if (session.user.emailVerified) {
 		throw redirect(302, '/');
 	}
@@ -15,7 +15,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 export const actions: Actions = {
 	default: async ({ locals }) => {
 		const session = await locals.auth.validate();
-		if (!session) throw redirect(302, '/login');
+		if (!session) throw redirect(302, '/signin');
 		if (session.user.emailVerified) {
 			throw redirect(302, '/');
 		}

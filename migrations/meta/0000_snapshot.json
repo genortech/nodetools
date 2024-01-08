@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "550e8caf-209c-4b97-9c5a-865549bed35b",
+  "id": "6fffad40-f1d9-49f7-a1ae-4bb730a2843e",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "cable_pull_calcs": {
@@ -57,6 +57,103 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
+    "earth_measurement": {
+      "name": "earth_measurement",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "earth_georef": {
+          "name": "earth_georef",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "CURRENT_TIMESTAMP"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "earth_reading": {
+      "name": "earth_reading",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "earth_measurement_id": {
+          "name": "earth_measurement_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "rod_seperation": {
+          "name": "rod_seperation",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "earth_measurement": {
+          "name": "earth_measurement",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "measurement_photo": {
+          "name": "measurement_photo",
+          "type": "blob",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "earth_reading_earth_measurement_id_earth_measurement_id_fk": {
+          "name": "earth_reading_earth_measurement_id_earth_measurement_id_fk",
+          "tableFrom": "earth_reading",
+          "tableTo": "earth_measurement",
+          "columnsFrom": [
+            "earth_measurement_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
     "earth_drop_calcs": {
       "name": "earth_drop_calcs",
       "columns": {
@@ -69,13 +166,6 @@
         },
         "project_id": {
           "name": "project_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "earth_drop": {
-          "name": "earth_drop",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
@@ -117,18 +207,321 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "max_demand_calc": {
-      "name": "max_demand_calc",
+    "com_demand": {
+      "name": "com_demand",
       "columns": {
         "id": {
           "name": "id",
           "type": "integer",
           "primaryKey": true,
           "notNull": true,
-          "autoincrement": true
+          "autoincrement": false
         },
         "project_id": {
           "name": "project_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "office_lnp_va": {
+          "name": "office_lnp_va",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "office_lnp_area": {
+          "name": "office_lnp_area",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "office_acc_va": {
+          "name": "office_acc_va",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "office_acc_area": {
+          "name": "office_acc_area",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "okfice_acrc_va": {
+          "name": "okfice_acrc_va",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "office_acrc_area": {
+          "name": "office_acrc_area",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "office_aczh_va": {
+          "name": "office_aczh_va",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "office_aczh_area": {
+          "name": "office_aczh_area",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "office_acvv_va": {
+          "name": "office_acvv_va",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "office_acvv_area": {
+          "name": "office_acvv_area",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "carpark_oa_va": {
+          "name": "carpark_oa_va",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "carpark_oa_area": {
+          "name": "carpark_oa_area",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "carpark_oa_ev_charging": {
+          "name": "carpark_oa_ev_charging",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "carpark_oa_ev_charging_area": {
+          "name": "carpark_oa_ev_charging_area",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "carpark_basement_va": {
+          "name": "carpark_basement_va",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "carpark_basement_area": {
+          "name": "carpark_basement_area",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "carpark_basement_ev_charging": {
+          "name": "carpark_basement_ev_charging",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "carpark_basement_ev_charging_area": {
+          "name": "carpark_basement_ev_charging_area",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "retail_lnp_va": {
+          "name": "retail_lnp_va",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "retail_lnp_area": {
+          "name": "retail_lnp_area",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "retail_ac_va": {
+          "name": "retail_ac_va",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "retail_ac_area": {
+          "name": "retail_ac_area",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "warehouse_lnp_va": {
+          "name": "warehouse_lnp_va",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "warehouse_lnp_area": {
+          "name": "warehouse_lnp_area",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "warehouse_ventilation_va": {
+          "name": "warehouse_ventilation_va",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "warehouse_ventilation_area": {
+          "name": "warehouse_ventilation_area",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "warehouse_special_equipment": {
+          "name": "warehouse_special_equipment",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "light_industrial_lnp_va": {
+          "name": "light_industrial_lnp_va",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "light_industrial_lnp_area": {
+          "name": "light_industrial_lnp_area",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "light_industrial_ventilation_va": {
+          "name": "light_industrial_ventilation_va",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "light_industrial_ventilation_area": {
+          "name": "light_industrial_ventilation_area",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "light_industrial_ac_va": {
+          "name": "light_industrial_ac_va",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "light_industrial_ac_area": {
+          "name": "light_industrial_ac_area",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "light_industrial_special_equipment": {
+          "name": "light_industrial_special_equipment",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "taverns_va": {
+          "name": "taverns_va",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "taverns_area": {
+          "name": "taverns_area",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "theater_va": {
+          "name": "theater_va",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "theater_area": {
+          "name": "theater_area",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "com_demand_project_id_maxdemand_project_id_fk": {
+          "name": "com_demand_project_id_maxdemand_project_id_fk",
+          "tableFrom": "com_demand",
+          "tableTo": "maxdemand_project",
+          "columnsFrom": [
+            "project_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "maxdemand_project": {
+      "name": "maxdemand_project",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "master_project_id": {
+          "name": "master_project_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
@@ -153,10 +546,189 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "max_demand_calc_project_id_project_id_fk": {
-          "name": "max_demand_calc_project_id_project_id_fk",
-          "tableFrom": "max_demand_calc",
+        "maxdemand_project_master_project_id_project_id_fk": {
+          "name": "maxdemand_project_master_project_id_project_id_fk",
+          "tableFrom": "maxdemand_project",
           "tableTo": "project",
+          "columnsFrom": [
+            "master_project_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "res_demand": {
+      "name": "res_demand",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "project_id": {
+          "name": "project_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "no_units": {
+          "name": "no_units",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "interior_lighting": {
+          "name": "interior_lighting",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "exterior_lighting": {
+          "name": "exterior_lighting",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "10a_sockets": {
+          "name": "10a_sockets",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "15a_sockets": {
+          "name": "15a_sockets",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 10
+        },
+        "20a_sockets": {
+          "name": "20a_sockets",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 15
+        },
+        "cooking_appliances": {
+          "name": "cooking_appliances",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "heating": {
+          "name": "heating",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "instantaneous_water_heating": {
+          "name": "instantaneous_water_heating",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "storage_water_heating": {
+          "name": "storage_water_heating",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "pool_heating": {
+          "name": "pool_heating",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "communal_lighting": {
+          "name": "communal_lighting",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "communal_sockets": {
+          "name": "communal_sockets",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "communal_washing": {
+          "name": "communal_washing",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "communcal_ac": {
+          "name": "communcal_ac",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "communcal_pool": {
+          "name": "communcal_pool",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "electric_carcharges": {
+          "name": "electric_carcharges",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "lifts": {
+          "name": "lifts",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "motors": {
+          "name": "motors",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "large_load": {
+          "name": "large_load",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "res_demand_project_id_maxdemand_project_id_fk": {
+          "name": "res_demand_project_id_maxdemand_project_id_fk",
+          "tableFrom": "res_demand",
+          "tableTo": "maxdemand_project",
           "columnsFrom": [
             "project_id"
           ],
@@ -302,8 +874,29 @@
           "notNull": false,
           "autoincrement": false
         },
-        "company_id": {
-          "name": "company_id",
+        "organisation_id": {
+          "name": "organisation_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "project_status": {
+          "name": "project_status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "project_priority": {
+          "name": "project_priority",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "notes": {
+          "name": "notes",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
@@ -349,12 +942,12 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "project_company_id_organisation_id_fk": {
-          "name": "project_company_id_organisation_id_fk",
+        "project_organisation_id_organisation_id_fk": {
+          "name": "project_organisation_id_organisation_id_fk",
           "tableFrom": "project",
           "tableTo": "organisation",
           "columnsFrom": [
-            "company_id"
+            "organisation_id"
           ],
           "columnsTo": [
             "id"

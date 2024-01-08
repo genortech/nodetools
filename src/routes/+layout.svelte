@@ -15,7 +15,8 @@
 <ModeWatcher />
 <body class="flex justify-between w-full flex-col min-h-screen">
 	<header class="flex flex-row items-center justify-between px-12 py-4">
-		<a class="text-xl font-extrabold" href="/">
+		<a class="text-2xl font-extrabold" href="/">
+			NodeTools
 			<!-- <img src="/logo/logo.png" alt="Logo" width="64" height="64" /> -->
 		</a>
 		<div class="flex flex-row gap-x-4 items-center">
@@ -48,12 +49,10 @@
 	</header>
 	<slot />
 	<footer class="flex items-center justify-center py-4">
-		<div>
-			<a class=" font-light hover:underline" href="/support" target="_blank">FAQ and Support</a>
+		<div class="flex items-center px-2">
+			<a class=" font-light hover:underline" href="/support">FAQ and Support</a>
 		</div>
-		<span> </span>
-		<br />
-		<div>
+		<div class="flex items-center px-2">
 			<a class=" font-light hover:underline" href="https://nodegroup.com.au" target="_blank"
 				>Company of Node Group Pty Ltd &copy;
 			</a>

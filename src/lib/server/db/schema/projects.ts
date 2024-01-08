@@ -15,7 +15,7 @@ export const project_table = sqliteTable(
 		hasMdCalc: integer('has_md_calc', { mode: 'boolean' }),
 		hasEarthCalc: integer('has_earthing_calc', { mode: 'boolean' }),
 		hasCableCalc: integer('has_cablepull_calc', { mode: 'boolean' }),
-		organisationId: text('company_id').references(() => organisation_table.id),
+		organisationId: text('organisation_id').references(() => organisation_table.id),
 		prjctStatus: text('project_status').notNull(),
 		prjctPriority: text('project_priority'),
 		notes: text('notes'),

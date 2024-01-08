@@ -69,7 +69,7 @@ export const emailVerification_table = sqliteTable('email_verification', {
 });
 
 export const userOneRelations = relations(user_table, ({ one }) => ({
-	organization: one(organisation_table, {
+	organisation: one(organisation_table, {
 		fields: [user_table.organisationId],
 		references: [organisation_table.id]
 	}),

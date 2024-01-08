@@ -6,21 +6,106 @@ CREATE TABLE `cable_pull_calcs` (
 	FOREIGN KEY (`project_id`) REFERENCES `project`(`id`) ON UPDATE no action ON DELETE no action
 );
 --> statement-breakpoint
+CREATE TABLE `earth_measurement` (
+	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+	`earth_georef` text,
+	`created_at` integer DEFAULT CURRENT_TIMESTAMP,
+	`updated_at` integer DEFAULT CURRENT_TIMESTAMP
+);
+--> statement-breakpoint
+CREATE TABLE `earth_reading` (
+	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+	`earth_measurement_id` integer,
+	`rod_seperation` integer,
+	`earth_measurement` integer,
+	`measurement_photo` blob,
+	FOREIGN KEY (`earth_measurement_id`) REFERENCES `earth_measurement`(`id`) ON UPDATE no action ON DELETE no action
+);
+--> statement-breakpoint
 CREATE TABLE `earth_drop_calcs` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`project_id` integer,
-	`earth_drop` integer,
 	`created_at` integer DEFAULT CURRENT_TIMESTAMP,
 	`updated_at` integer DEFAULT CURRENT_TIMESTAMP,
 	FOREIGN KEY (`project_id`) REFERENCES `project`(`id`) ON UPDATE no action ON DELETE no action
 );
 --> statement-breakpoint
-CREATE TABLE `max_demand_calc` (
-	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+CREATE TABLE `com_demand` (
+	`id` integer PRIMARY KEY NOT NULL,
 	`project_id` integer,
+	`office_lnp_va` integer,
+	`office_lnp_area` integer,
+	`office_acc_va` integer,
+	`office_acc_area` integer,
+	`okfice_acrc_va` integer,
+	`office_acrc_area` integer,
+	`office_aczh_va` integer,
+	`office_aczh_area` integer,
+	`office_acvv_va` integer,
+	`office_acvv_area` integer,
+	`carpark_oa_va` integer,
+	`carpark_oa_area` integer,
+	`carpark_oa_ev_charging` integer,
+	`carpark_oa_ev_charging_area` integer,
+	`carpark_basement_va` integer,
+	`carpark_basement_area` integer,
+	`carpark_basement_ev_charging` integer,
+	`carpark_basement_ev_charging_area` integer,
+	`retail_lnp_va` integer,
+	`retail_lnp_area` integer,
+	`retail_ac_va` integer,
+	`retail_ac_area` integer,
+	`warehouse_lnp_va` integer,
+	`warehouse_lnp_area` integer,
+	`warehouse_ventilation_va` integer,
+	`warehouse_ventilation_area` integer,
+	`warehouse_special_equipment` integer,
+	`light_industrial_lnp_va` integer,
+	`light_industrial_lnp_area` integer,
+	`light_industrial_ventilation_va` integer,
+	`light_industrial_ventilation_area` integer,
+	`light_industrial_ac_va` integer,
+	`light_industrial_ac_area` integer,
+	`light_industrial_special_equipment` integer,
+	`taverns_va` integer,
+	`taverns_area` integer,
+	`theater_va` integer,
+	`theater_area` integer,
+	FOREIGN KEY (`project_id`) REFERENCES `maxdemand_project`(`id`) ON UPDATE no action ON DELETE no action
+);
+--> statement-breakpoint
+CREATE TABLE `maxdemand_project` (
+	`id` integer PRIMARY KEY NOT NULL,
+	`master_project_id` integer,
 	`created_at` integer DEFAULT CURRENT_TIMESTAMP,
 	`updated_at` integer DEFAULT CURRENT_TIMESTAMP,
-	FOREIGN KEY (`project_id`) REFERENCES `project`(`id`) ON UPDATE no action ON DELETE no action
+	FOREIGN KEY (`master_project_id`) REFERENCES `project`(`id`) ON UPDATE no action ON DELETE no action
+);
+--> statement-breakpoint
+CREATE TABLE `res_demand` (
+	`id` integer PRIMARY KEY NOT NULL,
+	`project_id` integer,
+	`no_units` integer NOT NULL,
+	`interior_lighting` integer,
+	`exterior_lighting` integer,
+	`10a_sockets` integer,
+	`15a_sockets` integer DEFAULT 10,
+	`20a_sockets` integer DEFAULT 15,
+	`cooking_appliances` integer,
+	`heating` integer,
+	`instantaneous_water_heating` integer,
+	`storage_water_heating` integer,
+	`pool_heating` integer,
+	`communal_lighting` integer,
+	`communal_sockets` integer,
+	`communal_washing` integer,
+	`communcal_ac` integer,
+	`communcal_pool` integer,
+	`electric_carcharges` integer,
+	`lifts` integer,
+	`motors` integer,
+	`large_load` integer,
+	FOREIGN KEY (`project_id`) REFERENCES `maxdemand_project`(`id`) ON UPDATE no action ON DELETE no action
 );
 --> statement-breakpoint
 CREATE TABLE `organisation` (
@@ -42,11 +127,14 @@ CREATE TABLE `project` (
 	`has_md_calc` integer,
 	`has_earthing_calc` integer,
 	`has_cablepull_calc` integer,
-	`company_id` text,
+	`organisation_id` text,
+	`project_status` text NOT NULL,
+	`project_priority` text,
+	`notes` text,
 	`created_at` integer DEFAULT CURRENT_TIMESTAMP,
 	`updated_at` integer DEFAULT CURRENT_TIMESTAMP,
 	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON UPDATE no action ON DELETE cascade,
-	FOREIGN KEY (`company_id`) REFERENCES `organisation`(`id`) ON UPDATE no action ON DELETE no action
+	FOREIGN KEY (`organisation_id`) REFERENCES `organisation`(`id`) ON UPDATE no action ON DELETE no action
 );
 --> statement-breakpoint
 CREATE TABLE `email_verification` (
